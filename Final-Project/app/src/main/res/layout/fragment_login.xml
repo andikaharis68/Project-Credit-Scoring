@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="26.7dp">
 
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -42,6 +41,7 @@
 
                     <TextView
                         android:fontFamily="@font/poppins_bold"
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="21.5dp"
@@ -49,58 +49,22 @@
                         android:text="LOGIN"
                         android:textSize="23.3sp" />
 
-
                     <TextView
                         style="@style/TextView.PoppinsMedium13spWhite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27.3dp"
-                        android:text="Name"/>
+                        android:text="Username"/>
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="263dp"
+                        android:layout_height="35dp"
                         android:layout_marginTop="12dp"
-                        android:background="@android:color/transparent"
+                        android:background="@drawable/round_corner_white"
                         android:maxLines="1"
+                        android:paddingHorizontal="15dp"
                         android:textColorHint="#c2c2c2"
-                        android:textCursorDrawable="@drawable/grey_cursor_color"
-                        android:textSize="15sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="6.7dp"
-                        android:layout_marginRight="17.3dp"
-                        android:background="#9e9e9e" />
-
-
-                    <TextView
-                        style="@style/TextView.PoppinsMedium13spWhite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="22dp"
-                        android:text="Username" />
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="17.3dp"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal">
-
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:inputType="textPassword"
-                            android:maxLength="10"
-                            android:maxLines="1"
-                            android:textColor="#333232"
-                            android:textCursorDrawable="@drawable/grey_cursor_color" />
-                    </RelativeLayout>
+                     />
 
                     <View
                         android:layout_width="match_parent"
@@ -115,7 +79,6 @@
                         android:layout_marginTop="22dp"
                         android:text="Password" />
 
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -123,16 +86,13 @@
                         android:layout_marginTop="12dp"
                         android:orientation="horizontal">
 
-
                         <EditText
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
+                            android:layout_height="35dp"
+                            android:background="@drawable/round_corner_white"
                             android:inputType="textPassword"
-                            android:maxLength="10"
-                            android:maxLines="1"
-                            android:textColor="#333232"
-                            android:textCursorDrawable="@drawable/grey_cursor_color" />
+                            android:paddingHorizontal="15dp"
+                            android:textColor="#333232"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -164,7 +124,7 @@
                 android:layout_height="33dp"
                 android:layout_marginLeft="27dp"
                 android:layout_marginTop="21.7dp"
-                android:background="@drawable/rounded_corner" />
+                android:background="@drawable/round_corner_yellow" />
 
 
             <ImageView
@@ -173,7 +133,6 @@
                 android:layout_gravity="bottom|center"
                 android:layout_marginLeft="80dp"
                 android:src="@drawable/arr" />
-
 
         </FrameLayout>
     </LinearLayout>
