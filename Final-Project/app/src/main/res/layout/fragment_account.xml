@@ -4,91 +4,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".transaction.TransactionFragment">
+    tools:context=".presentation.transaction.TransactionFragment">
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/red_fruchsia"
         android:orientation="vertical"
         android:paddingVertical="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView"
+            style="@style/TextView.title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment" />
+            android:text="Management Account"
+            android:textAlignment="center" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_marginHorizontal="30dp"
+        android:layout_height="120dp"
+        android:layout_marginHorizontal="50dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.393"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131">
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.166">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:paddingVertical="10dp"
             android:layout_marginHorizontal="10dp"
+            android:layout_weight="1"
             android:background="@drawable/round_corner_white"
+            android:orientation="vertical"
             android:paddingHorizontal="10dp"
-            >
+            android:paddingVertical="10dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="9"
                 android:src="@drawable/staff2" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/poppins_med"
                 android:text="Staff"
-                android:textSize="15dp"
                 android:textAlignment="center"
-                android:fontFamily="@font/poppins_med"/>
+                android:textSize="15dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginHorizontal="10dp"
-            android:paddingVertical="10dp"
+            android:layout_weight="1"
             android:background="@drawable/round_corner_white"
             android:orientation="vertical"
             android:paddingHorizontal="10dp"
-            >
+            android:paddingVertical="10dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="9"
-                android:src="@drawable/supervisor"/>
+                android:src="@drawable/supervisor" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/poppins_med"
                 android:text="Supervisor"
-                android:textSize="15dp"
                 android:textAlignment="center"
-                android:fontFamily="@font/poppins_med"/>
+                android:textSize="15dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

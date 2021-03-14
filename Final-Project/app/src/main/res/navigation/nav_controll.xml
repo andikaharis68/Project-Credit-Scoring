@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.andika.project_credit_scoring.LoginFragment"
+        android:name="com.andika.project_credit_scoring.presentation.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.andika.project_credit_scoring.home.HomeFragment"
+        android:name="com.andika.project_credit_scoring.presentation.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/transactionFragment"
-        android:name="com.andika.project_credit_scoring.transaction.TransactionFragment"
+        android:name="com.andika.project_credit_scoring.presentation.transaction.TransactionFragment"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" />
     <action
@@ -28,12 +28,12 @@
         app:destination="@id/transactionFragment" />
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.andika.project_credit_scoring.account.AccountFragment"
+        android:name="com.andika.project_credit_scoring.presentation.account.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.andika.project_credit_scoring.history.HistoryFragment"
+        android:name="com.andika.project_credit_scoring.presentation.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
     <action

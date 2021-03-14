@@ -1,4 +1,4 @@
-package com.andika.project_credit_scoring.transaction
+package com.andika.project_credit_scoring.presentation.history
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.andika.project_credit_scoring.R
 
 
-class TransactionFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,7 @@ class TransactionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transaction, container, false)
+        return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
 
