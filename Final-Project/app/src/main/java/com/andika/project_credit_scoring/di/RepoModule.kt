@@ -1,5 +1,7 @@
 package com.andika.project_credit_scoring.di
 
+import com.andika.project_credit_scoring.repositories.AccountRepository
+import com.andika.project_credit_scoring.repositories.AccountRepositoryImpl
 import com.andika.project_credit_scoring.repositories.LoginRepository
 import com.andika.project_credit_scoring.repositories.LoginRepositoryImpl
 import dagger.Binds
@@ -13,6 +15,9 @@ internal abstract class RepoModule {
 
     @Binds
     abstract fun bindRepositoryPostAuth(repositoryImpl: LoginRepositoryImpl): LoginRepository
+
+    @Binds
+    abstract fun bindRepositoryAccount(accountRepositoryImpl: AccountRepositoryImpl): AccountRepository
 
 }
 

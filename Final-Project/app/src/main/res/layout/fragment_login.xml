@@ -17,13 +17,13 @@
             android:layout_width="227dp"
             android:layout_height="148.7dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/duanew" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="26.7dp">
+            android:layout_marginTop="40dp">
 
             <FrameLayout
                 android:layout_width="match_parent"

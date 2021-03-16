@@ -21,7 +21,7 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
 
     fun postLogin(requestLogin: RequestLogin) =
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
-            withTimeout(10000) {
+            withTimeout(5000) {
                 var response: ResponseLogin? = null
                 try {
                     Log.d("REQ","$requestLogin")
@@ -41,12 +41,13 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
         }
 
     fun validation(requestLogin: RequestLogin) {
-        if (requestLogin.password.length <= 6) {
+        if (requestLogin.password.length <= 15) {
             _validation.postValue(ValidationLogin(email = true, username = true))
-        } else if (requestLogin.password.length <= 8) {
+        } else if (requestLogin.password.length <= 15) {
             _validation.postValue(ValidationLogin(email = false, username = true))
         } else {
             _validation.postValue(ValidationLogin(email = false, username = false))
         }
     }
 }
+

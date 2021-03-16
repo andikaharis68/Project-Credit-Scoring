@@ -29,6 +29,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="EditText.PoppinsNormal14spGrey">
+        <item name="android:fontFamily">@font/poppins_med</item>
+        <item name="android:hint">@color/hintColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="EditText"></style>
 
 </resources>

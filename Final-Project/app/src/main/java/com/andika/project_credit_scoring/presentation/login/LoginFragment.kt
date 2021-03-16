@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.andika.project_credit_scoring.Constanst.TOKEN
+import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentLoginBinding
 import com.andika.project_credit_scoring.login.RequestLogin
@@ -23,7 +24,8 @@ class LoginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
     lateinit var viewModel: LoginViewModel
     lateinit var requestLoginValue: RequestLogin
-    
+    lateinit var sharedViewModel: MainActivityViewModel
+
     @Inject
     lateinit var sharedPref: SharedPreferences
     
@@ -32,6 +34,7 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         initViewModel()
         subscribe()
+        sharedViewModel.hideBottomVav(true)
     }
 
     override fun onCreateView(
@@ -52,6 +55,7 @@ class LoginFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
     }
 
     private fun subscribe() {
@@ -66,6 +70,7 @@ class LoginFragment : Fragment() {
                                     sharedPref.edit().putString(TOKEN, "${it.data?.token}")
                                         .apply()
                                     findNavController().navigate(R.id.action_global_homeFragment)
+                                    sharedViewModel.hideBottomVav(false)
                                 }
                                 401 -> {
                                     Toast.makeText(
@@ -84,7 +89,7 @@ class LoginFragment : Fragment() {
                                 else -> {
                                     Toast.makeText(
                                         requireContext(),
-                                        "Password or Email invalid!",
+                                        "Password or Email invalid!m",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }

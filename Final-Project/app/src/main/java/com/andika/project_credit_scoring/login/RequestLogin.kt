@@ -4,7 +4,6 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-
 data class RequestLogin (
         @SerializedName("password")
         val password: String,
