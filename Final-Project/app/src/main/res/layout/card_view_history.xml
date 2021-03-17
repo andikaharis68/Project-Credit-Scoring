@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_item_account"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="@color/white"
+    card_view:cardCornerRadius="10dp"
+    android:layout_marginVertical="5dp"
+    android:clickable="true"
+    android:elevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/round_corner_white"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/card_color_approval"
+                android:layout_width="120dp"
+                android:background="@color/blue_green"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/card_text_price1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:text="7050 K"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textSize="18sp"/>
+
+                <ImageView
+                    android:id="@+id/card_image_approval"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginLeft="25dp"
+                    android:background="@drawable/approved"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/card_text_name"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:fontFamily="@font/poppins_med"/>
+                    <TextView
+                        android:id="@+id/card_text_kredit_ratio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:text="kredit_ratio"
+                        android:fontFamily="@font/poppins_med"/>
+                    <TextView
+                        android:id="@+id/card_text_staff"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Staff"
+                        android:fontFamily="@font/poppins_med"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_weight="7"
+                    android:layout_height="match_parent"
+                    android:paddingVertical="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/card_text_financial_criteria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Not Pass"
+                        android:textColor="@color/red_fruchsia"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_bold"/>
+
+                    <TextView
+                        android:id="@+id/card_text_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="21-10-2021"
+                        android:fontFamily="@font/poppins_bold"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

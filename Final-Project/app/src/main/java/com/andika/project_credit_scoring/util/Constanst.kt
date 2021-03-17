@@ -1,4 +1,4 @@
-package com.andika.project_credit_scoring
+package com.andika.project_credit_scoring.util
 
 object Constanst {
     val MENU_HOME = "Home"
@@ -7,7 +7,7 @@ object Constanst {
     val MENU_ACCOUNT = "Account"
 
     // URL
-    val BASE_URL = "http://192.168.43.237:8085/"
+    val BASE_URL = "http://192.168.43.70:3005/"
 
     // SHARED PREFERENCES TAG
     val TOKEN = "TOKEN"

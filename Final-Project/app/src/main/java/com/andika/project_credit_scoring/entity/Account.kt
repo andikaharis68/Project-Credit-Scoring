@@ -1,4 +1,4 @@
-package com.andika.project_credit_scoring.account
+package com.andika.project_credit_scoring.entity
 
 import android.os.Parcel
 import android.os.Parcelable

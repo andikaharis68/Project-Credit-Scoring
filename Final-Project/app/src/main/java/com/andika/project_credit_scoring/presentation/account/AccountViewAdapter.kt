@@ -1,16 +1,14 @@
 package com.andika.project_credit_scoring.presentation.account
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
-import com.andika.project_credit_scoring.account.Account
-import com.andika.project_credit_scoring.account.AccountCoba
+import com.andika.project_credit_scoring.entity.Account
 
 class AccountViewAdapter(private val accountClickListener: AccountClickListener) : RecyclerView.Adapter<AccountViewHolder>() {
 
-    var account = ArrayList<AccountCoba>()
+    var account = ArrayList<Account>()
     var select : String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
@@ -28,7 +26,7 @@ class AccountViewAdapter(private val accountClickListener: AccountClickListener)
         return account.size
     }
 
-    fun setData(data: List<AccountCoba>, selected: String) {
+    fun setData(data: List<Account>, selected: String) {
         select = selected
         account.clear()
         account.addAll(data)

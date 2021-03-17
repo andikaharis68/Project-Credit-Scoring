@@ -1,8 +1,8 @@
-package com.andika.project_credit_scoring.di
+package com.andika.project_credit_scoring.di.module
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.andika.project_credit_scoring.Constanst.BASE_URL
+import com.andika.project_credit_scoring.util.Constanst.BASE_URL
 import com.andika.project_credit_scoring.api.AuthTokenInterceptor
 import dagger.Module
 import dagger.Provides

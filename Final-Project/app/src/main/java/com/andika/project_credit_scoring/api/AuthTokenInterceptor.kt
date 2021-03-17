@@ -1,7 +1,7 @@
 package com.andika.project_credit_scoring.api
 
 import android.content.SharedPreferences
-import com.andika.project_credit_scoring.Constanst.TOKEN
+import com.andika.project_credit_scoring.util.Constanst.TOKEN
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

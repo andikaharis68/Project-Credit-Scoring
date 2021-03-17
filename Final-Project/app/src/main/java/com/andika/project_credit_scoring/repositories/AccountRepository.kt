@@ -1,9 +1,10 @@
 package com.andika.project_credit_scoring.repositories
 
-import com.andika.project_credit_scoring.account.Account
-import com.andika.project_credit_scoring.account.AccountCoba
+import com.andika.project_credit_scoring.entity.Account
+import retrofit2.Response
 
 
 interface AccountRepository {
-    fun getAccount() : List<AccountCoba>
+    suspend fun getAccount() : Response<List<Account>>
+    fun addAccount(account: Account)
 }

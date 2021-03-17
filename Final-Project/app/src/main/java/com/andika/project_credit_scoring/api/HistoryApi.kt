@@ -1,10 +1,11 @@
 package com.andika.project_credit_scoring.api
 
 import com.andika.project_credit_scoring.entity.Account
+import com.andika.project_credit_scoring.entity.History
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface AccountApi {
-    @GET("/account")
-    suspend fun getAccount(): Response<List<Account>>
+interface HistoryApi {
+    @GET("report")
+    suspend fun getReport() : Response<List<History>>
 }

@@ -4,15 +4,13 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.andika.project_credit_scoring.Constanst.MENU_ACCOUNT
-import com.andika.project_credit_scoring.Constanst.MENU_HISTORY
-import com.andika.project_credit_scoring.Constanst.MENU_HOME
-import com.andika.project_credit_scoring.Constanst.MENU_TRANSACTION
+import com.andika.project_credit_scoring.util.Constanst.MENU_ACCOUNT
+import com.andika.project_credit_scoring.util.Constanst.MENU_HISTORY
+import com.andika.project_credit_scoring.util.Constanst.MENU_HOME
+import com.andika.project_credit_scoring.util.Constanst.MENU_TRANSACTION
 import com.andika.project_credit_scoring.databinding.ActivityMainBinding
-import com.andika.project_credit_scoring.presentation.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

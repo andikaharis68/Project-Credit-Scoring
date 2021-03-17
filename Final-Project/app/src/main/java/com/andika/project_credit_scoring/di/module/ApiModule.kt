@@ -1,6 +1,7 @@
-package com.andika.project_credit_scoring.di
+package com.andika.project_credit_scoring.di.module
 
 import com.andika.project_credit_scoring.api.AccountApi
+import com.andika.project_credit_scoring.api.HistoryApi
 import com.andika.project_credit_scoring.api.LoginApi
 import dagger.Module
 import dagger.Provides
@@ -23,5 +24,11 @@ class ApiModule {
     @Provides
     fun provideAccount(retrofit: Retrofit): AccountApi {
         return retrofit.create(AccountApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideHistory(retrofit: Retrofit): HistoryApi {
+        return retrofit.create(HistoryApi::class.java)
     }
 }

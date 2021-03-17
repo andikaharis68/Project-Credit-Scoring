@@ -2,6 +2,7 @@ package com.andika.project_credit_scoring.presentation.login
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.andika.project_credit_scoring.di.qualifier.PostAuth
 import com.andika.project_credit_scoring.login.RequestLogin
 import com.andika.project_credit_scoring.login.ResponseLogin
 import com.andika.project_credit_scoring.login.ValidationLogin
@@ -12,7 +13,7 @@ import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val repository: LoginRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(@PostAuth val repository: LoginRepository) : ViewModel() {
     private val _validation: MutableLiveData<ValidationLogin> = MutableLiveData()
 
     fun getValidation(): LiveData<ValidationLogin> {
@@ -30,7 +31,7 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
                     Log.d("ERROR", "$e")
                     response =
                         ResponseLogin(
-                            code = 400,
+                            code = 200,
                             data = null,
                             message = "Email or Password invalid!",
                         )

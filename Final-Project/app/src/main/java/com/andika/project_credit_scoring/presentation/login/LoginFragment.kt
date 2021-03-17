@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.andika.project_credit_scoring.Constanst.TOKEN
+import com.andika.project_credit_scoring.util.Constanst.TOKEN
 import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentLoginBinding
