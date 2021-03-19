@@ -7,6 +7,38 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class History(
 
+	@field:SerializedName("code")
+	val code: Int? = null,
+
+	@field:SerializedName("data")
+	val data: Data? = null,
+
+	@field:SerializedName("message")
+	val message: String? = null,
+
+	@field:SerializedName("timestamp")
+	val timestamp: String? = null
+) : Parcelable
+
+@Parcelize
+data class Data(
+
+	@field:SerializedName("total")
+	val total: Int? = null,
+
+	@field:SerializedName("size")
+	val size: Int? = null,
+
+	@field:SerializedName("page")
+	val page: Int? = null,
+
+	@field:SerializedName("list")
+	val list: List<ListItem?>? = null
+) : Parcelable
+
+@Parcelize
+data class ListItem(
+
 	@field:SerializedName("approvalDate")
 	val approvalDate: String? = null,
 
@@ -18,37 +50,6 @@ data class History(
 
 	@field:SerializedName("id")
 	val id: String? = null
-) : Parcelable
-
-@Parcelize
-data class Customer(
-
-	@field:SerializedName("submitter")
-	val submitter: String? = null,
-
-	@field:SerializedName("profilePhoto")
-	val profilePhoto: String? = null,
-
-	@field:SerializedName("address")
-	val address: String? = null,
-
-	@field:SerializedName("employeeType")
-	val employeeType: String? = null,
-
-	@field:SerializedName("name")
-	val name: String? = null,
-
-	@field:SerializedName("id")
-	val id: String? = null,
-
-	@field:SerializedName("idNumber")
-	val idNumber: Long? = null,
-
-	@field:SerializedName("idPhoto")
-	val idPhoto: String? = null,
-
-	@field:SerializedName("email")
-	val email: String? = null
 ) : Parcelable
 
 @Parcelize
@@ -104,6 +105,37 @@ data class Transaction(
 
 	@field:SerializedName("customer")
 	val customer: Customer? = null
+) : Parcelable
+
+@Parcelize
+data class Customer(
+
+	@field:SerializedName("submitter")
+	val submitter: String? = null,
+
+	@field:SerializedName("profilePhoto")
+	val profilePhoto: String? = null,
+
+	@field:SerializedName("address")
+	val address: String? = null,
+
+	@field:SerializedName("employeeType")
+	val employeeType: String? = null,
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null,
+
+	@field:SerializedName("idNumber")
+	val idNumber: Long? = null,
+
+	@field:SerializedName("idPhoto")
+	val idPhoto: String? = null,
+
+	@field:SerializedName("email")
+	val email: String? = null
 ) : Parcelable
 
 @Parcelize

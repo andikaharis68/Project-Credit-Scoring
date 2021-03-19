@@ -76,4 +76,7 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //circel bar
+    implementation 'com.budiyev.android:circular-progress-bar:1.2.2'
 }

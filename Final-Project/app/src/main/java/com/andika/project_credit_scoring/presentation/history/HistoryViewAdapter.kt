@@ -1,24 +1,27 @@
 package com.andika.project_credit_scoring.presentation.history
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.entity.History
+import com.andika.project_credit_scoring.entity.ListItem
 
 class HistoryViewAdapter(private val historyClickListener: HistoryClickListener) : RecyclerView.Adapter<HistoryViewHolder>() {
 
-    var history = ArrayList<History>()
+    var history = ArrayList<ListItem?>()
     var select : String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemView = inflater.inflate(R.layout.card_view_history, parent, false)
-        return HistoryViewHolder(itemView)
+        return HistoryViewHolder(itemView, historyClickListener)
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         val account = history[position]
+        Log.d("HH", "$account")
         holder.bind(account)
     }
 
@@ -26,7 +29,7 @@ class HistoryViewAdapter(private val historyClickListener: HistoryClickListener)
         return history.size
     }
 
-    fun setData(data: List<History>) {
+    fun setData(data: List<ListItem?>) {
         history.clear()
         history.addAll(data)
         notifyDataSetChanged()
