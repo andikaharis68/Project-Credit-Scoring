@@ -1,18 +1,21 @@
 package com.andika.project_credit_scoring.presentation.account
 
-import android.app.AlertDialog
+
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.databinding.FragmentAccountBinding
 import com.andika.project_credit_scoring.util.ResourceStatus
+import com.andika.project_credit_scoring.util.component.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_add_account.view.*
 
@@ -22,12 +25,14 @@ class AccountFragment : Fragment() {
     lateinit var binding: FragmentAccountBinding
     lateinit var viewModel: AccountViewModel
     lateinit var rvAdapter: AccountViewAdapter
+    lateinit var loadingDialog: AlertDialog
     var selected : String = ""
     private var accountRequestValue: Account? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentAccountBinding.inflate(layoutInflater)
+        loadingDialog = LoadingDialog.build(requireContext())
         initViewModel()
         subscribe()
         viewModel.getALlAccount()
@@ -39,21 +44,41 @@ class AccountFragment : Fragment() {
     ): View? {
         binding.apply {
             rvAdapter = AccountViewAdapter(viewModel)
-            recyclerViewItem.apply {
+            recyclerViewAccount.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter
             }
-            imageStaff.setOnClickListener{
-                textAccount.text = "Staff Account"
-                selected = "staff"
-                viewModel.getALlAccount()
+
+            viewModel.getALlAccount().observe(requireActivity()) {
+                Log.d("IT", "${it!!.data}")
+                it?.data?.list?.apply {
+                    Log.d("THIS", "$this")
+                    rvAdapter.setData(this)
+                }
             }
-            imageSpv.setOnClickListener{
-                textAccount.text = "Supervisor Account"
-                selected = "supervisor"
+
+            textStaff.setOnClickListener{
+                selected = "Staff"
                 viewModel.getALlAccount()
+                textStaff.setBackgroundResource(R.drawable.red_roundshape)
+                textSupervisor.setBackgroundResource(R.drawable.white_roundshape)
+                textAll.setBackgroundResource(R.drawable.white_roundshape)
             }
-            addAcccount.setOnClickListener{
+            textSupervisor.setOnClickListener{
+                selected = "Supervisor"
+                viewModel.getALlAccount()
+                textSupervisor.setBackgroundResource(R.drawable.red_roundshape)
+                textStaff.setBackgroundResource(R.drawable.white_roundshape)
+                textAll.setBackgroundResource(R.drawable.white_roundshape)
+            }
+            textAll.setOnClickListener {
+                selected = "All"
+                viewModel.getALlAccount()
+                textAll.setBackgroundResource(R.drawable.red_roundshape)
+                textSupervisor.setBackgroundResource(R.drawable.white_roundshape)
+                textStaff.setBackgroundResource(R.drawable.white_roundshape)
+            }
+            addAccount.setOnClickListener{
                 val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
                 val alertDialog = dialogBuilder.show()
@@ -85,8 +110,34 @@ class AccountFragment : Fragment() {
             when (it.status) {
                 ResourceStatus.LOADING -> Log.d("APP", "Loading..")
                 ResourceStatus.SUCCESS -> {
+                    loadingDialog.hide()
                     val data: List<Account> = it.data as List<Account>
                     rvAdapter.setData(data,selected)
+                }
+                ResourceStatus.FAIL -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        it.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+        viewModel.accountLiveData.observe(this){
+            when (it.status) {
+                ResourceStatus.LOADING -> Log.d("APP", "Loading..")
+                ResourceStatus.SUCCESS -> {
+                    val data: List<Account> = it.data as List<Account>
+                    rvAdapter.setData(data,selected)
+                }
+                ResourceStatus.FAIL -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        it.message,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

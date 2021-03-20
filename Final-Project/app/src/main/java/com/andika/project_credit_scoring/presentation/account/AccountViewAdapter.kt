@@ -19,7 +19,11 @@ class AccountViewAdapter(private val accountClickListener: AccountClickListener)
 
     override fun onBindViewHolder(holder: AccountViewHolder, position: Int) {
         val account = account[position]
-        holder.bind(account, select)
+        if (account.role == select){
+            holder.bind(account, select)
+        } else if (select == "All") {
+            holder.bind(account, select)
+        }
     }
 
     override fun getItemCount(): Int {

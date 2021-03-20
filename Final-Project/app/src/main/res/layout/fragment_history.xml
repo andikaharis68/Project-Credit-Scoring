@@ -20,7 +20,7 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/red_fruchsia"
+                android:background="@drawable/red_shape"
                 android:orientation="vertical"
                 android:paddingVertical="20dp">
 
@@ -185,7 +185,7 @@
                     android:textAlignment="center" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_item"
+                    android:id="@+id/recycler_view_history"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

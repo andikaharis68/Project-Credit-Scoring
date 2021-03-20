@@ -52,7 +52,7 @@ class HistoryFragment : Fragment() {
         // Inflate the layout for this fragment
         binding.apply {
             rvAdapter = HistoryViewAdapter(viewModel)
-            recyclerViewItem.apply {
+            recyclerViewHistory.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter
             }

@@ -25,13 +25,13 @@ class LoginViewModel @Inject constructor(@PostAuth val repository: LoginReposito
             withTimeout(5000) {
                 var response: ResponseLogin? = null
                 try {
-                    Log.d("REQ","$requestLogin")
                     response = repository.postLogin(requestLogin)
+                    Log.d("REQ LOGIN","$response")
                 } catch (e: Exception) {
                     Log.d("ERROR", "$e")
                     response =
                         ResponseLogin(
-                            code = 200,
+                            code = 400,
                             data = null,
                             message = "Email or Password invalid!",
                         )

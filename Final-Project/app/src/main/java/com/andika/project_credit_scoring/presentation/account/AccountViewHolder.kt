@@ -12,7 +12,7 @@ class AccountViewHolder(view: View, private val accountClickListener: AccountCli
 
     fun bind(account: Account, select: String) {
         binding.apply {
-            if (account.role == select) {
+            if (account.data?.list. == select) {
                 cardItemAccount.setCardBackgroundColor(Color.parseColor("#FEC84D"))
             } else {
                 cardItemAccount.setCardBackgroundColor(Color.parseColor("#ffffff"))

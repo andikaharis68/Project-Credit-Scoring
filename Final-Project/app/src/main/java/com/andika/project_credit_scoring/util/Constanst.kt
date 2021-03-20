@@ -7,7 +7,7 @@ object Constanst {
     val MENU_ACCOUNT = "Account"
 
     // URL
-    val BASE_URL = "http://192.168.43.11:3001/"
+    val BASE_URL = "http://10.10.14.204:8085/"
 
     // SHARED PREFERENCES TAG
     val TOKEN = "TOKEN"

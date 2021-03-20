@@ -19,8 +19,8 @@
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/red_fruchsia"
+                android:layout_height="130dp"
+                android:background="@drawable/red_shape"
                 android:orientation="vertical"
                 android:paddingVertical="20dp">
 
@@ -32,6 +32,54 @@
                     android:text="Transaction"
                     android:textColor="@color/white"
                     android:textSize="23sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:orientation="horizontal"
+                    android:elevation="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginHorizontal="70dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/white_roundshape">
+
+                    <EditText
+                        android:layout_width="225dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="5dp"
+                        android:background="@drawable/white_roundshape"
+                        android:layout_marginLeft="10dp"/>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/search"/>
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/card_text_view"
+                    style="@style/TextView.title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Employee"
+                    android:textColor="@color/grey"
+                    android:textAlignment="center" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_transaction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="10dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

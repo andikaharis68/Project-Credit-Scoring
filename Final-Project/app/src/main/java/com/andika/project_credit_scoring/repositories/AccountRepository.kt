@@ -5,6 +5,6 @@ import retrofit2.Response
 
 
 interface AccountRepository {
-    suspend fun getAccount() : Response<List<Account>>
-    fun addAccount(account: Account)
+    suspend fun getAllAccount() : Account
+    suspend fun addAccount(account: Account) : Response<Account>
 }
