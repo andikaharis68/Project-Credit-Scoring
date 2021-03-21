@@ -9,13 +9,12 @@ import javax.inject.Inject
 
 class AccountRepositoryImpl @Inject constructor(private val accountApi: AccountApi) : AccountRepository {
 
-
     override suspend fun getAllAccount() : Account {
         return accountApi.getAccount()
         Log.d("DATA", "${accountApi.getAccount()}")
     }
 
-    override suspend fun addAccount(account: Account) : Response<Account> {
-        return accountApi.addAccount(account)
+    override suspend fun activateAccount(id : String) : Response<Account> {
+        return accountApi.activateAccount(id)
     }
 }

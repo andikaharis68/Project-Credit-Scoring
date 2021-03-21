@@ -1,6 +1,7 @@
 package com.andika.project_credit_scoring.presentation.account
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,8 +27,6 @@ class AccountFragment : Fragment() {
     lateinit var viewModel: AccountViewModel
     lateinit var rvAdapter: AccountViewAdapter
     lateinit var loadingDialog: AlertDialog
-    var selected : String = ""
-    private var accountRequestValue: Account? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,45 +56,32 @@ class AccountFragment : Fragment() {
                 }
             }
 
-            textStaff.setOnClickListener{
-                selected = "Staff"
+            textVerified.setOnClickListener{
                 viewModel.getALlAccount()
-                textStaff.setBackgroundResource(R.drawable.red_roundshape)
-                textSupervisor.setBackgroundResource(R.drawable.white_roundshape)
+                textVerified.setBackgroundResource(R.drawable.red_roundshape)
+                textNotVerified.setBackgroundResource(R.drawable.white_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
+                textVerified.setTextColor(Color.parseColor("#ffffff"))
+                textAll.setTextColor(Color.parseColor("#000000"))
+                textNotVerified.setTextColor(Color.parseColor("#000000"))
             }
-            textSupervisor.setOnClickListener{
-                selected = "Supervisor"
+            textNotVerified.setOnClickListener{
                 viewModel.getALlAccount()
-                textSupervisor.setBackgroundResource(R.drawable.red_roundshape)
-                textStaff.setBackgroundResource(R.drawable.white_roundshape)
+                textNotVerified.setBackgroundResource(R.drawable.red_roundshape)
+                textVerified.setBackgroundResource(R.drawable.white_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
+                textVerified.setTextColor(Color.parseColor("#000000"))
+                textAll.setTextColor(Color.parseColor("#000000"))
+                textNotVerified.setTextColor(Color.parseColor("#ffffff"))
             }
             textAll.setOnClickListener {
-                selected = "All"
                 viewModel.getALlAccount()
                 textAll.setBackgroundResource(R.drawable.red_roundshape)
-                textSupervisor.setBackgroundResource(R.drawable.white_roundshape)
-                textStaff.setBackgroundResource(R.drawable.white_roundshape)
-            }
-            addAccount.setOnClickListener{
-                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
-                val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
-                val alertDialog = dialogBuilder.show()
-                dialogView.dialog_btn_create.setOnClickListener {
-                    accountRequestValue = Account(
-                        name = dialogView.dialog_et_name.text.toString(),
-                        email = dialogView.dialog_et_email.text.toString(),
-                        password = dialogView.dialog_et_password.text.toString(),
-                        role = dialogView.dialog_et_role.text.toString()
-                    )
-                    viewModel.addAccount(accountRequestValue!!)
-                    viewModel.getALlAccount()
-                    alertDialog.dismiss()
-                }
-                dialogView.dialogBtnCancel.setOnClickListener {
-                    alertDialog.dismiss()
-                }
+                textNotVerified.setBackgroundResource(R.drawable.white_roundshape)
+                textVerified.setBackgroundResource(R.drawable.white_roundshape)
+                textVerified.setTextColor(Color.parseColor("#000000"))
+                textAll.setTextColor(Color.parseColor("#ffffff"))
+                textNotVerified.setTextColor(Color.parseColor("#000000"))
             }
         }
         return binding.root
@@ -106,40 +92,39 @@ class AccountFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.accountsLiveData.observe(this){
+        viewModel.activateAccountLiveData.observe(this) {
             when (it.status) {
                 ResourceStatus.LOADING -> Log.d("APP", "Loading..")
                 ResourceStatus.SUCCESS -> {
-                    loadingDialog.hide()
-                    val data: List<Account> = it.data as List<Account>
-                    rvAdapter.setData(data,selected)
-                }
-                ResourceStatus.FAIL -> {
-                    loadingDialog.hide()
                     Toast.makeText(
                         requireContext(),
-                        it.message,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        }
-        viewModel.accountLiveData.observe(this){
-            when (it.status) {
-                ResourceStatus.LOADING -> Log.d("APP", "Loading..")
-                ResourceStatus.SUCCESS -> {
-                    val data: List<Account> = it.data as List<Account>
-                    rvAdapter.setData(data,selected)
-                }
-                ResourceStatus.FAIL -> {
-                    loadingDialog.hide()
-                    Toast.makeText(
-                        requireContext(),
-                        it.message,
-                        Toast.LENGTH_LONG
+                        "Account success Activated",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
             }
         }
     }
 }
+
+
+
+//addAccount.setOnClickListener{
+//    val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
+//    val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
+//    val alertDialog = dialogBuilder.show()
+//    dialogView.dialog_btn_create.setOnClickListener {
+//        accountRequestValue = Account(
+//            name = dialogView.dialog_et_name.text.toString(),
+//            email = dialogView.dialog_et_email.text.toString(),
+//            password = dialogView.dialog_et_password.text.toString(),
+//            role = dialogView.dialog_et_role.text.toString()
+//        )
+//        viewModel.addAccount(accountRequestValue!!)
+//        viewModel.getALlAccount()
+//        alertDialog.dismiss()
+//    }
+//    dialogView.dialogBtnCancel.setOnClickListener {
+//        alertDialog.dismiss()
+//    }
+//}

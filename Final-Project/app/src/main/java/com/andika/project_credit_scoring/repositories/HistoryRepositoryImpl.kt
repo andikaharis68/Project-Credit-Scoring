@@ -9,8 +9,6 @@ import javax.inject.Inject
 //@Inject constructor(historyApi: HistoryApi)
 
 class HistoryRepositoryImpl @Inject constructor(private val historyApi: HistoryApi): HistoryRepository{
-
-
     override suspend fun getAllHistory() : History {
         return historyApi.getReport()
         Log.d("DATA", "${historyApi.getReport()}")

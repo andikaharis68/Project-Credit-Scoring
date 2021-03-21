@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.di.qualifier.ServiceAccount
-import com.andika.project_credit_scoring.entity.History
 import com.andika.project_credit_scoring.repositories.AccountRepository
 import com.andika.project_credit_scoring.util.ResourceState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,15 +16,9 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(@ServiceAccount val repository: AccountRepository) :
     ViewModel(), AccountClickListener {
-    private var _accountsLiveData = MutableLiveData<ResourceState>()
     private var _accountLiveData = MutableLiveData<ResourceState>()
 
-    val accountsLiveData: MutableLiveData<ResourceState>
-        get() {
-            return _accountsLiveData
-        }
-
-    val accountLiveData: LiveData<ResourceState>
+    val activateAccountLiveData: LiveData<ResourceState>
         get() {
             return _accountLiveData
         }
@@ -36,9 +29,9 @@ class AccountViewModel @Inject constructor(@ServiceAccount val repository: Accou
                 var response: Account? = null
                 try {
                     response = repository.getAllAccount()
-                    Log.d("RESPONSE","$response")
+                    Log.d("RESPONSE", "$response")
                 } catch (e: Exception) {
-                    Log.d("ERROR","$e")
+                    Log.d("ERROR", "$e")
                     response =
                         Account(
                             code = 400,
@@ -51,22 +44,15 @@ class AccountViewModel @Inject constructor(@ServiceAccount val repository: Accou
             }
         }
 
-    fun addAccount(account: Account) {
+    override fun activateAccount(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            _accountLiveData.postValue(ResourceState.loading())
-            val response = repository.addAccount(account)
-            if (response.isSuccessful) {
-                response.body()?.let {
-                    Log.d("DATA", "$it")
-                    _accountLiveData.postValue(ResourceState.success(it))
-                }
+            val response = repository.activateAccount(id)
+            if(response.isSuccessful) {
+                _accountLiveData.postValue(ResourceState.success(response.body()))
             } else {
                 _accountLiveData.postValue(ResourceState.fail("error"))
             }
         }
     }
-
-    override fun onUpdate(account: Account) {
-        TODO("Not yet implemented")
-    }
 }
+

@@ -3,6 +3,7 @@ package com.andika.project_credit_scoring.di.module
 import com.andika.project_credit_scoring.api.AccountApi
 import com.andika.project_credit_scoring.api.HistoryApi
 import com.andika.project_credit_scoring.api.LoginApi
+import com.andika.project_credit_scoring.api.TransactionApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +31,11 @@ class ApiModule {
     @Provides
     fun provideHistory(retrofit: Retrofit): HistoryApi {
         return retrofit.create(HistoryApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTransaction(retrofit: Retrofit): TransactionApi {
+        return retrofit.create(TransactionApi::class.java)
     }
 }

@@ -44,7 +44,6 @@ class HistoryFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -114,7 +113,7 @@ class HistoryFragment : Fragment() {
                 dialogView.dialog_image_approval.setBackgroundResource(R.drawable.rejected)
             }
         }
-    }
+}
 
     companion object {
         @JvmStatic

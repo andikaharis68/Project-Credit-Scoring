@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.CardViewHistoryBinding
 import com.andika.project_credit_scoring.entity.History
-import com.andika.project_credit_scoring.entity.ListItem
+import com.andika.project_credit_scoring.entity.ListHistory
 
 class HistoryViewHolder(view: View, private val historyClickListener: HistoryClickListener) : RecyclerView.ViewHolder(view) {
 
     private val binding = CardViewHistoryBinding.bind(view)
 
-    fun bind(history: ListItem?) {
+    fun bind(history: ListHistory?) {
         binding.apply {
             var coba = history?.approval?.transaction?.customer?.name
             Log.d("COBA", "$coba")
@@ -27,6 +27,7 @@ class HistoryViewHolder(view: View, private val historyClickListener: HistoryCli
                 cardTextFinancialCriteria.setTextColor(Color.parseColor("#00B1B0"))
             } else {
                 cardTextFinancialCriteria.text = "Not Pass"
+                cardTextFinancialCriteria.setTextColor(Color.parseColor("#ba0f30"))
             }
             if (history?.approval?.approve == true) {
                 cardColorApproval.setBackgroundColor(Color.parseColor("#00B1B0"))

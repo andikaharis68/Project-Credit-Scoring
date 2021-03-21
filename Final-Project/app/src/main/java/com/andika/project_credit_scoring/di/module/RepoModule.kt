@@ -23,5 +23,8 @@ internal abstract class RepoModule {
     @Binds
     abstract fun bindRepositoryHistory(historyRepositoryImpl: HistoryRepositoryImpl): HistoryRepository
 
+    @Binds
+    abstract fun bindRepositoryTransaction(transactionRepositoryImpl: TransactionRepositoryImpl): TransactionRepository
+
 }
 

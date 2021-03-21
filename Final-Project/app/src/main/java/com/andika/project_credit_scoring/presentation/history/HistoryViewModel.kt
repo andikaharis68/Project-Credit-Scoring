@@ -7,7 +7,7 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.entity.History
-import com.andika.project_credit_scoring.entity.ListItem
+import com.andika.project_credit_scoring.entity.ListHistory
 import com.andika.project_credit_scoring.repositories.HistoryRepository
 import com.andika.project_credit_scoring.util.ResourceState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,9 +24,9 @@ import kotlin.math.log
 @HiltViewModel
 class HistoryViewModel @Inject constructor(private val repository: HistoryRepository) : ViewModel(), HistoryClickListener {
 
-    private var _detailLiveData = MutableLiveData<ListItem?>()
+    private var _detailLiveData = MutableLiveData<ListHistory?>()
 
-    val detailLiveData: MutableLiveData<ListItem?>
+    val detailLiveData: MutableLiveData<ListHistory?>
         get() {
             return _detailLiveData
         }
@@ -52,7 +52,7 @@ class HistoryViewModel @Inject constructor(private val repository: HistoryReposi
             }
         }
 
-    override fun onDetail(history: ListItem?) {
+    override fun onDetail(history: ListHistory?) {
         _detailLiveData.postValue(history)
     }
 

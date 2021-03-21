@@ -11,7 +11,7 @@ data class Account(
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: Data2? = null,
+	val data: DataAccount? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -21,7 +21,7 @@ data class Account(
 ) : Parcelable
 
 @Parcelize
-data class Data2(
+data class DataAccount(
 
 	@field:SerializedName("total")
 	val total: Int? = null,
@@ -33,21 +33,11 @@ data class Data2(
 	val page: Int? = null,
 
 	@field:SerializedName("list")
-	val list: List<ListItem2?>? = null
+	val list: List<ListAccount?>? = null
 ) : Parcelable
 
 @Parcelize
-data class RolesItem(
-
-	@field:SerializedName("name")
-	val name: String? = null,
-
-	@field:SerializedName("id")
-	val id: String? = null
-) : Parcelable
-
-@Parcelize
-data class ListItem2(
+data class ListAccount(
 
 	@field:SerializedName("profilePicture")
 	val profilePicture: String? = null,
@@ -56,7 +46,7 @@ data class ListItem2(
 	val isVerified: Boolean? = null,
 
 	@field:SerializedName("roles")
-	val roles: List<RolesItem?>? = null,
+	val roles: String? = null,
 
 	@field:SerializedName("dateRegister")
 	val dateRegister: String? = null,

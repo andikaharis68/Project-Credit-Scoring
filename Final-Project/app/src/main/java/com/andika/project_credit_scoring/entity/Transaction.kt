@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class History(
+data class Transaction(
 
 	@field:SerializedName("code")
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: DataHistory? = null,
+	val data: DataTransaction? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -21,39 +21,7 @@ data class History(
 ) : Parcelable
 
 @Parcelize
-data class DataHistory(
-
-	@field:SerializedName("total")
-	val total: Int? = null,
-
-	@field:SerializedName("size")
-	val size: Int? = null,
-
-	@field:SerializedName("page")
-	val page: Int? = null,
-
-	@field:SerializedName("list")
-	val list: List<ListHistory?>? = null
-) : Parcelable
-
-@Parcelize
-data class ListHistory(
-
-	@field:SerializedName("approvalDate")
-	val approvalDate: String? = null,
-
-	@field:SerializedName("approval")
-	val approval: Approval? = null,
-
-	@field:SerializedName("submitDate")
-	val submitDate: String? = null,
-
-	@field:SerializedName("id")
-	val id: String? = null
-) : Parcelable
-
-@Parcelize
-data class TransactionHistory(
+data class ListTransaction(
 
 	@field:SerializedName("income")
 	val income: Int? = null,
@@ -104,11 +72,27 @@ data class TransactionHistory(
 	val creditRatio: Double? = null,
 
 	@field:SerializedName("customer")
-	val customer: CustomerHistory? = null
+	val customer: CustomerTransaction? = null
 ) : Parcelable
 
 @Parcelize
-data class CustomerHistory(
+data class DataTransaction(
+
+	@field:SerializedName("total")
+	val total: Int? = null,
+
+	@field:SerializedName("size")
+	val size: Int? = null,
+
+	@field:SerializedName("page")
+	val page: Int? = null,
+
+	@field:SerializedName("list")
+	val list: List<ListTransaction?>? = null
+) : Parcelable
+
+@Parcelize
+data class CustomerTransaction(
 
 	@field:SerializedName("submitter")
 	val submitter: String? = null,
@@ -136,14 +120,4 @@ data class CustomerHistory(
 
 	@field:SerializedName("email")
 	val email: String? = null
-) : Parcelable
-
-@Parcelize
-data class Approval(
-
-	@field:SerializedName("approve")
-	val approve: Boolean? = null,
-
-	@field:SerializedName("transaction")
-	val transaction: TransactionHistory? = null
 ) : Parcelable

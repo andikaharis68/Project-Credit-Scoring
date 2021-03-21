@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
-import com.andika.project_credit_scoring.entity.History
-import com.andika.project_credit_scoring.entity.ListItem
+import com.andika.project_credit_scoring.entity.ListHistory
 
 class HistoryViewAdapter(private val historyClickListener: HistoryClickListener) : RecyclerView.Adapter<HistoryViewHolder>() {
 
-    var history = ArrayList<ListItem?>()
+    var history = ArrayList<ListHistory?>()
     var select : String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -29,7 +28,7 @@ class HistoryViewAdapter(private val historyClickListener: HistoryClickListener)
         return history.size
     }
 
-    fun setData(data: List<ListItem?>) {
+    fun setData(data: List<ListHistory?>) {
         history.clear()
         history.addAll(data)
         notifyDataSetChanged()

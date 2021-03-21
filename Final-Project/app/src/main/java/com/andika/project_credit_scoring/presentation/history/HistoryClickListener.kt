@@ -1,7 +1,7 @@
 package com.andika.project_credit_scoring.presentation.history
 
-import com.andika.project_credit_scoring.entity.ListItem
+import com.andika.project_credit_scoring.entity.ListHistory
 
 interface HistoryClickListener {
-    fun onDetail(history: ListItem?)
+    fun onDetail(history: ListHistory?)
 }

@@ -8,17 +8,19 @@
     card_view:cardBackgroundColor="@color/white"
     card_view:cardCornerRadius="10dp"
     android:clickable="true"
+    android:layout_marginLeft="0dp"
     android:layout_marginBottom="10dp"
     >
 
     <LinearLayout
+        android:id="@+id/heigh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/card_account"
-            android:paddingVertical="20dp"
+            android:paddingVertical="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -66,6 +68,46 @@
                         android:text="role" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/card_layout_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="110dp"
+                android:paddingHorizontal="20dp">
+
+                <Button
+                    android:id="@+id/card_btn_reject"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/yellow_freesia"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="Reject"
+                    android:textSize="10dp"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/card_btn_approve"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/red_fruchsia"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="10dp"
+                    android:text="Approve"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/card_text_approval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This Account is already verified!"
+                android:textAlignment="textEnd"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_med"/>
         </LinearLayout>
     </LinearLayout>
 

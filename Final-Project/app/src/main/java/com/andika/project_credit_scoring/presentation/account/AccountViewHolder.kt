@@ -1,32 +1,37 @@
 package com.andika.project_credit_scoring.presentation.account
 
 import android.graphics.Color
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.andika.project_credit_scoring.R
-import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.databinding.CardViewAccountBinding
+import com.andika.project_credit_scoring.entity.ListAccount
 
 class AccountViewHolder(view: View, private val accountClickListener: AccountClickListener) : RecyclerView.ViewHolder(view) {
     private val binding = CardViewAccountBinding.bind(view)
 
-    fun bind(account: Account, select: String) {
+    fun bind(account: ListAccount?) {
+        Log.d("HOLDER", "$account")
         binding.apply {
-            if (account.data?.list. == select) {
-                cardItemAccount.setCardBackgroundColor(Color.parseColor("#FEC84D"))
+            if (account?.isVerified == false){
+                cardItemAccount.setCardBackgroundColor(Color.parseColor("#d94c67"))
+                cardTextApproval.visibility = View.GONE
             } else {
                 cardItemAccount.setCardBackgroundColor(Color.parseColor("#ffffff"))
+                cardLayoutButton.visibility= View.GONE
             }
-
-            if (account.role == "staff") {
-                imageCard.setBackgroundResource(R.drawable.staff)
-            } else {
-                imageCard.setBackgroundResource(R.drawable.supervisor)
+            nameTv.text = account?.username
+            emailTv.text = account?.email
+            roleTv.text = account?.roles
+            cardBtnApprove.setOnClickListener {
+                accountClickListener.activateAccount(account?.id!!)
+                cardLayoutButton.visibility= View.GONE
             }
-            nameTv.text = account.name
-            emailTv.text = account.email
-            roleTv.text = account.role
-
+            cardBtnReject.setOnClickListener {
+                cardTextApproval.visibility = View.VISIBLE
+                cardLayoutButton.visibility= View.GONE
+                cardTextApproval.text = "This account is rejected!"
+            }
         }
     }
 }
