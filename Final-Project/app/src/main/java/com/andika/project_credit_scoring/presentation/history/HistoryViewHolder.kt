@@ -8,18 +8,20 @@ import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.CardViewHistoryBinding
 import com.andika.project_credit_scoring.entity.History
 import com.andika.project_credit_scoring.entity.ListHistory
+import java.text.NumberFormat
+import java.util.*
 
 class HistoryViewHolder(view: View, private val historyClickListener: HistoryClickListener) : RecyclerView.ViewHolder(view) {
 
     private val binding = CardViewHistoryBinding.bind(view)
+    val localeID = Locale("in", "ID")
+    val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
     fun bind(history: ListHistory?) {
         binding.apply {
-            var coba = history?.approval?.transaction?.customer?.name
-            Log.d("COBA", "$coba")
             cardTextName.text = history?.approval?.transaction?.customer?.name
-            cardTextPrice1.text = "${history?.approval?.transaction?.loan} K"
-            cardTextKreditRatio.text = history?.approval?.transaction?.creditRatio.toString()
+            cardTextPrice1.text = formatRupiah.format(history?.approval?.transaction?.loan)
+            cardTextKreditRatio.text = "${history?.approval?.transaction?.creditRatio} %"
             cardTextDate.text = history?.approvalDate
             cardTextStaff.text = history?.approval?.transaction?.submitter
             if (history?.approval?.transaction?.financeCriteria == true){

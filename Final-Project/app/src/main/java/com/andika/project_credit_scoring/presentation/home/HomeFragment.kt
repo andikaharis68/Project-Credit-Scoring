@@ -3,21 +3,23 @@ package com.andika.project_credit_scoring.presentation.home
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentHomeBinding
+import com.andika.project_credit_scoring.util.Constanst.FULLNAME
 import com.andika.project_credit_scoring.util.Constanst.ROLE
 import com.andika.project_credit_scoring.util.Constanst.TOKEN
 import com.andika.project_credit_scoring.util.Constanst.USERNAME
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.alert_logout.view.*
+import java.text.NumberFormat
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,6 +29,8 @@ class HomeFragment : Fragment() {
     lateinit var sharedViewModel : MainActivityViewModel
     var user = ""
     var role = ""
+    val localeID = Locale("in", "ID")
+    val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -34,18 +38,22 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViewModel()
-        user = sharedPref.getString(USERNAME, "")!!
+        user = sharedPref.getString(FULLNAME, "")!!
         role = sharedPref.getString(ROLE, "")!!
         binding = FragmentHomeBinding.inflate(layoutInflater)
+
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         binding.apply {
             textInfoUser.text = user
+            textInfoRupiah.text = formatRupiah.format(1200000)
             textInfoRole.text = "You're access as a $role"
-            if (role == "MASTER") {
+            if (role == "SUPERVISOR") {
                 navigationAccount.visibility = View.GONE
             }
             homeBtnLogin.setOnClickListener {
@@ -61,7 +69,10 @@ class HomeFragment : Fragment() {
                 sharedViewModel.hideBottomVav(false)
             }
             homeBtnLogout.setOnClickListener {
-                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_history, null)
+                val dialogView = LayoutInflater.from(requireContext()).inflate(
+                    R.layout.alert_logout,
+                    null
+                )
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
                 val alertDialog = dialogBuilder.show()
                 dialogView.alertBtnCancel.setOnClickListener {
@@ -70,11 +81,12 @@ class HomeFragment : Fragment() {
                 dialogView.alert_btn_exit.setOnClickListener {
                     sharedPref.edit()
                         .putString(TOKEN, "")
-                        .putString(USERNAME, "")
+                        .putString(FULLNAME, "")
                         .putString(ROLE, "")
                         .apply()
                     findNavController().navigate(R.id.action_global_loginFragment)
                     sharedViewModel.hideBottomVav(true)
+                    alertDialog.dismiss()
                 }
             }
             homeBtnAccount.setOnClickListener {

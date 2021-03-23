@@ -13,6 +13,7 @@ object Constanst {
     val TOKEN = "TOKEN"
     val USERNAME = "USERNAME"
     val ROLE = "ROLE"
+    val FULLNAME = "FULLNAME"
 
     val VALIDATION_EMAIL = "VALIDATION_EMAIL"
     val VALIDATION_PASSWORD = "VALIDATION_EMAIL"

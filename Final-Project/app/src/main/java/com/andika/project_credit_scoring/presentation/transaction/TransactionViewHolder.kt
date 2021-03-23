@@ -6,19 +6,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.CardViewTransactionBinding
 import com.andika.project_credit_scoring.entity.ListTransaction
+import java.text.NumberFormat
+import java.util.*
 
 class TransactionViewHolder(view: View, private val historyClickListener: TransactionClickListener) : RecyclerView.ViewHolder(view) {
 
     private val binding = CardViewTransactionBinding.bind(view)
-    private var statusNow = ""
+    private val localeID = Locale("in", "ID")
+    private val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
-    fun bind(transaction: ListTransaction?, status : String) {
-        statusNow = status
+    fun bind(transaction: ListTransaction?) {
         binding.apply {
             cardTextName.text = transaction?.customer?.name
-            cardTextLoan.text = "Rp. ${transaction?.loan}"
-            cardTextIncome.text = "Rp. ${transaction?.income}"
-            cardTextOutcome.text = "Rp. ${transaction?.outcome}"
+            cardTextLoan.text = formatRupiah.format(transaction?.loan)
+            cardTextIncome.text = formatRupiah.format(transaction?.income)
+            cardTextOutcome.text = formatRupiah.format(transaction?.outcome)
             cardTextRatio.text = "${transaction?.creditRatio} %"
             if (transaction?.employeeCriteria == true) {
                 cardTextEmployeeCriteria.text = "Pass"
@@ -34,19 +36,8 @@ class TransactionViewHolder(view: View, private val historyClickListener: Transa
                 cardTextFinancialCriteria.text = "Not Pass"
                 cardTextFinancialCriteria.setTextColor(Color.parseColor("#ba0f30"))
             }
-            if (statusNow == ""){
-                cardViewTransaction.setOnClickListener {
-                    historyClickListener.onDetail(transaction)
-                }
-                cardImageStatus.visibility = View.GONE
-                cardLayTransaction.setBackgroundResource(R.drawable.round_corner_white)
-            } else if (statusNow == "APPROVE") {
-                cardImageStatus.visibility = View.VISIBLE
-                cardImageStatus.setBackgroundResource(R.drawable.approved)
-                cardLayTransaction.setBackgroundResource(R.drawable.round_corner_white)
-            } else if (statusNow == "REJECT") {
-                cardImageStatus.visibility = View.VISIBLE
-                cardLayTransaction.setBackgroundResource(R.drawable.rejected)
+            cardViewTransaction.setOnClickListener {
+                historyClickListener.onDetail(transaction)
             }
         }
     }

@@ -31,7 +31,7 @@ class LoginViewModel @Inject constructor(@PostAuth val repository: LoginReposito
                     Log.d("ERROR", "$e")
                     response =
                         ResponseLogin(
-                            code = 200,
+                            code = 400,
                             data = null,
                             message = "Email or Password invalid!",
                         )

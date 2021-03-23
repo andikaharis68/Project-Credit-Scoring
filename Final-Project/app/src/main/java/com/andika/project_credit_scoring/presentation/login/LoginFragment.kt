@@ -15,6 +15,7 @@ import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentLoginBinding
 import com.andika.project_credit_scoring.login.RequestLogin
+import com.andika.project_credit_scoring.util.Constanst.FULLNAME
 import com.andika.project_credit_scoring.util.Constanst.ROLE
 import com.andika.project_credit_scoring.util.Constanst.USERNAME
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,11 +72,11 @@ class LoginFragment : Fragment() {
                                 200 -> {
                                     sharedPref.edit()
                                         .putString(TOKEN, "${it.data?.token}")
-                                        .putString(USERNAME, "${it.data?.username}")
+                                        .putString(FULLNAME, "${it.data?.fullName}")
                                         .putString(ROLE, "${it.data?.roles}")
                                         .apply()
                                     findNavController().navigate(R.id.action_global_homeFragment)
-                                    sharedViewModel.hideBottomVav(false)
+                                    sharedViewModel.hideBottomVav(true)
                                 }
                                 401 -> {
                                     Toast.makeText(

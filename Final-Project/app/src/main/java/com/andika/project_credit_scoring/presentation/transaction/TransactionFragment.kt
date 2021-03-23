@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentTransactionBinding
+import com.andika.project_credit_scoring.entity.RequestApproval
 import com.andika.project_credit_scoring.presentation.history.HistoryViewAdapter
 import com.andika.project_credit_scoring.presentation.history.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,16 +22,19 @@ import kotlinx.android.synthetic.main.dialog_approval_transaction.view.*
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_transaction.*
 import kotlinx.android.synthetic.main.fragment_transaction.btn_back
+import java.text.NumberFormat
+import java.util.*
 
 @AndroidEntryPoint
 class TransactionFragment : Fragment() {
 
-
     lateinit var binding: FragmentTransactionBinding
     lateinit var viewModel: TransactionViewModel
+    lateinit var sharedViewModel: MainActivityViewModel
     lateinit var rvAdapter: TransactionViewAdapter
     lateinit var requestApproveValue: RequestApproval
-    var statusNow = ""
+    val localeID = Locale("in", "ID")
+    val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +58,17 @@ class TransactionFragment : Fragment() {
                 Log.d("IT", "${it!!.data}")
                 it?.data?.list?.apply {
                     Log.d("THIS", "$this")
-                    rvAdapter.setData(this, statusNow)
+                    rvAdapter.setData(this)
                 }
+            }
+
+            refreshTransaction.setOnRefreshListener {
+                viewModel.getALlTransaction()
+            }
+
+            btnBack.setOnClickListener{
+                findNavController().navigate(R.id.action_transactionFragment_to_homeFragment)
+                sharedViewModel.hideBottomVav(true)
             }
 
         }
@@ -62,6 +77,7 @@ class TransactionFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(TransactionViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
     }
 
     private fun subscribe(){
@@ -75,12 +91,12 @@ class TransactionFragment : Fragment() {
             dialogView.dialog_number_identity.text = it?.customer?.idNumber.toString()
             dialogView.dialog_employee_type.text = it?.customer?.employeeType
             dialogView.dialog_submitter.text = it?.submitter
-            dialogView.dialog_income.text = "Rp. ${it?.income}"
-            dialogView.dialog_outcome.text = "Rp. ${it?.outcome}"
-            dialogView.dialog_loan.text = "Rp. ${it?.loan}"
-            dialogView.dialog_interest.text = "Rp. ${it?.interest}"
+            dialogView.dialog_income.text = formatRupiah.format(it?.income)
+            dialogView.dialog_outcome.text = formatRupiah.format(it?.outcome)
+            dialogView.dialog_loan.text = formatRupiah.format(it?.loan)
+            dialogView.dialog_interest.text = formatRupiah.format(it?.interest)
             dialogView.dialog_credit_ratio.text = "${it?.creditRatio}%"
-            dialogView.dialog_main_loan.text = "Rp. ${it?.mainLoan}"
+            dialogView.dialog_main_loan.text = formatRupiah.format(it?.mainLoan)
             dialogView.dialog_interest_rate.text = "${it?.interestRate}%"
             dialogView.dialog_tenor.text = "${it?.tenor} month"
             dialogView.dialog_reason_type.text = it?.needType
@@ -103,14 +119,40 @@ class TransactionFragment : Fragment() {
                 requestApproveValue = RequestApproval(false, it?.id)
                 viewModel.approveTransaction(requestApproveValue)
                 alertDialog.dismiss()
-                statusNow = "REJECT"
             }
             dialogView.dialog_btn_approve.setOnClickListener { itReject ->
                 requestApproveValue = RequestApproval(true, it?.id)
                 viewModel.approveTransaction(requestApproveValue)
                 alertDialog.dismiss()
-                statusNow = "APPROVE"
             }
         }
     }
 }
+
+//fun getActivityApi() = viewModel.getCheckActivityApi().observe(requireActivity()) { res ->
+//    binding.apply {
+//        alertDialog.show()
+//        when (res?.code) {
+//            200 -> {
+//                alertDialog.hide()
+//                buttonStart.visibility = View.GONE
+//                buttonStop.visibility = View.VISIBLE
+//                viewModel.getMyTasksApi().observe(requireActivity()) { data ->
+//                    handleGetApi(data)
+//                }
+//            }
+//            404 -> {
+//                alertDialog.hide()
+//                buttonStart.visibility = View.VISIBLE
+//                buttonStop.visibility = View.GONE
+//                viewModel.getMyTasksApi().observe(requireActivity()) { data ->
+//                    handleGetApi(data)
+//                }
+//            }
+//            else -> {
+//                alertDialog.hide()
+//                Log.d("SOMETHING WRONG!", "$res")
+//            }
+//        }
+//    }
+//}

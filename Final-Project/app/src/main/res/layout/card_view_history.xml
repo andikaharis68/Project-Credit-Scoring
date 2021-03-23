@@ -33,10 +33,10 @@
                     android:id="@+id/card_text_price1"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:text="7050 K"
+                    android:text="Rp.5.000.000"
                     android:textAlignment="center"
                     android:fontFamily="@font/poppins_bold"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
 
                 <ImageView
                     android:id="@+id/card_image_approval"
@@ -55,7 +55,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/card_text_name"

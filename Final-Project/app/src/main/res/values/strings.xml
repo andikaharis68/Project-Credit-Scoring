@@ -2,4 +2,11 @@
     <string name="app_name">Project-Credit-Scoring</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="role">
+        <item>STAFF</item>
+        <item>SUPERVISOR</item>
+    </string-array>
+
 </resources>

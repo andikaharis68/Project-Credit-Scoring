@@ -234,13 +234,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            <ImageView
-                android:id="@+id/card_image_status"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:background="@drawable/approved"
-                android:layout_marginLeft="150dp"
-                android:layout_marginTop="-120dp"/>
 
         </LinearLayout>
 

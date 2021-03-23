@@ -65,11 +65,10 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="6dp"
                     android:layout_weight="1"
-                    android:background="@drawable/red_roundshape"
+                    android:background="@drawable/white_roundshape"
                     android:fontFamily="@font/poppins_med"
                     android:gravity="center"
                     android:text="Verified"
-                    android:textColor="@color/white"
                     android:textSize="13.3sp" />
 
                 <TextView
@@ -79,7 +78,8 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="6dp"
                     android:layout_weight="1"
-                    android:background="@drawable/white_roundshape"
+                    android:background="@drawable/red_roundshape"
+                    android:textColor="@color/white"
                     android:fontFamily="@font/poppins_med"
                     android:gravity="center"
                     android:text="All"
@@ -102,7 +102,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="510dp"
+                android:layout_height="550dp"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/round_corner_grey"
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:text="+ Add Account"
                     android:fontFamily="@font/poppins_med"
-                    android:textSize="20dp"
+                    android:textSize="17dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="10dp"/>
             </LinearLayout>

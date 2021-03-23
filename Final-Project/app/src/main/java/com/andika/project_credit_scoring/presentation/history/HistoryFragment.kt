@@ -1,6 +1,7 @@
 package com.andika.project_credit_scoring.presentation.history
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentHistoryBinding
 import com.andika.project_credit_scoring.entity.Account
@@ -26,24 +28,25 @@ import kotlinx.android.synthetic.main.dialog_history.*
 import kotlinx.android.synthetic.main.dialog_history.view.*
 import kotlinx.android.synthetic.main.dialog_loading.*
 import kotlinx.android.synthetic.main.fragment_account.*
+import java.text.NumberFormat
+import java.util.*
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
 
     lateinit var binding: FragmentHistoryBinding
     lateinit var viewModel: HistoryViewModel
+    lateinit var sharedViewModel: MainActivityViewModel
     lateinit var rvAdapter: HistoryViewAdapter
-    private var trans_employee = 0
-    private var trans_non_employee = 0
-    private var trans_contract_employee = 0
     private var progress = 0
+    val localeID = Locale("in", "ID")
+    val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentHistoryBinding.inflate(layoutInflater)
         initViewModel()
         subscribe()
-
     }
 
     override fun onCreateView(
@@ -66,12 +69,49 @@ class HistoryFragment : Fragment() {
                 }
             }
 
+            btnBack.setOnClickListener{
+                findNavController().navigate(R.id.action_historyFragment_to_homeFragment)
+                sharedViewModel.hideBottomVav(true)
+            }
+
+            textApprove.setOnClickListener{
+                viewModel.getALlHistory()
+                textViewReport.text = "Approved"
+                textApprove.setBackgroundResource(R.drawable.red_roundshape)
+                textAll.setBackgroundResource(R.drawable.white_roundshape)
+                textReject.setBackgroundResource(R.drawable.white_roundshape)
+                textApprove.setTextColor(Color.parseColor("#ffffff"))
+                textReject.setTextColor(Color.parseColor("#000000"))
+                textAll.setTextColor(Color.parseColor("#000000"))
+            }
+            textAll.setOnClickListener{
+                viewModel.getALlHistory()
+                textViewReport.text = "All report"
+                textAll.setBackgroundResource(R.drawable.red_roundshape)
+                textApprove.setBackgroundResource(R.drawable.white_roundshape)
+                textReject.setBackgroundResource(R.drawable.white_roundshape)
+                textApprove.setTextColor(Color.parseColor("#000000"))
+                textReject.setTextColor(Color.parseColor("#000000"))
+                textAll.setTextColor(Color.parseColor("#ffffff"))
+            }
+            textReject.setOnClickListener {
+                viewModel.getALlHistory()
+                textViewReport.text = "Rejected"
+                textReject.setBackgroundResource(R.drawable.red_roundshape)
+                textAll.setBackgroundResource(R.drawable.white_roundshape)
+                textApprove.setBackgroundResource(R.drawable.white_roundshape)
+                textApprove.setTextColor(Color.parseColor("#000000"))
+                textReject.setTextColor(Color.parseColor("#ffffff"))
+                textAll.setTextColor(Color.parseColor("#000000"))
+            }
+
         }
         return binding.root
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
     }
 
     private fun subscribe() {
@@ -87,9 +127,9 @@ class HistoryFragment : Fragment() {
             dialogView.dialog_text_address.text = it?.approval?.transaction?.customer?.address
             dialogView.dialog_text_status_employee.text = it?.approval?.transaction?.customer?.employeeType
             dialogView.dialog_text_identity.text = it?.approval?.transaction?.customer?.idNumber.toString()
-            dialogView.dialog_text_income.text = "Rp. ${it?.approval?.transaction?.income}"
-            dialogView.dialog_text_outcome.text = "Rp. ${it?.approval?.transaction?.outcome}"
-            dialogView.dialog_text_loan.text = "Rp. ${it?.approval?.transaction?.loan}"
+            dialogView.dialog_text_income.text = formatRupiah.format(it?.approval?.transaction?.income)
+            dialogView.dialog_text_outcome.text = formatRupiah.format(it?.approval?.transaction?.outcome)
+            dialogView.dialog_text_loan.text = formatRupiah.format(it?.approval?.transaction?.loan)
             progress = it?.approval?.transaction?.creditRatio?.toInt()!!
             dialogView.progress_bar.progress = progress.toFloat()
             dialogView.dialog_text_interest_rate.text = "${it?.approval?.transaction?.interestRate}%"

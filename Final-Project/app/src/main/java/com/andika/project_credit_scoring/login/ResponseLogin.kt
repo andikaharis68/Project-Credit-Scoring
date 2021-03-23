@@ -26,6 +26,12 @@ data class Data(
 	@field:SerializedName("roles")
 	val roles: String? = null,
 
+	@field:SerializedName("fullName")
+	val fullName: String? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null,
+
 	@field:SerializedName("email")
 	val email: String? = null,
 

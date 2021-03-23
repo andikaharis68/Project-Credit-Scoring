@@ -2,6 +2,7 @@ package com.andika.project_credit_scoring.repositories
 
 import android.util.Log
 import com.andika.project_credit_scoring.api.TransactionApi
+import com.andika.project_credit_scoring.entity.RequestApproval
 import com.andika.project_credit_scoring.entity.Transaction
 import javax.inject.Inject
 

@@ -19,4 +19,8 @@ class AccountRepositoryImpl @Inject constructor(private val accountApi: AccountA
         return accountApi.addAccount(requestAccount)
     }
 
+    override suspend fun deleteAccount(id: String): Response<Account> {
+        return accountApi.deleteAccount(id)
+    }
+
 }

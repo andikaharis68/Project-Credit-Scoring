@@ -7,4 +7,5 @@ import retrofit2.Response
 interface AccountRepository {
     suspend fun getAllAccount() : Account
     suspend fun addAccount(requestAccount: RequestAccount) : Response<Account>
+    suspend fun deleteAccount(id:String) : Response<Account>
 }
