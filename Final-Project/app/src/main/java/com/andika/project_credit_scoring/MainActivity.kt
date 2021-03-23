@@ -34,12 +34,14 @@ class MainActivity : AppCompatActivity() {
             bottomNav.setOnNavigationItemSelectedListener {
                 Log.d("NAV", "$it")
                 when ("$it") {
-                    MENU_HOME -> navHostFragment.findNavController().navigate(R.id.action_global_homeFragment)
+                    MENU_HOME -> {
+                        navHostFragment.findNavController().navigate(R.id.action_global_homeFragment)
+                        viewModel.hideBottomVav(true)
+                    }
                     MENU_TRANSACTION -> {
                         navHostFragment.findNavController().navigate(R.id.action_global_transactionFragment)
                     }
                     MENU_HISTORY -> navHostFragment.findNavController().navigate(R.id.action_global_historyFragment)
-                    MENU_ACCOUNT -> navHostFragment.findNavController().navigate(R.id.action_global_accountFragment)
                 }
                 true
             }

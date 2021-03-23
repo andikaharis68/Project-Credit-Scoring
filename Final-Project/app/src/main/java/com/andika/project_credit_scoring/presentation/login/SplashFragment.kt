@@ -1,20 +1,35 @@
 package com.andika.project_credit_scoring.presentation.login
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
+import com.andika.project_credit_scoring.databinding.FragmentSplashBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    lateinit var binding: FragmentSplashBinding
+    lateinit var sharedViewModel: MainActivityViewModel
+
+    @Inject
+    lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initViewModel()
+        sharedViewModel.hideBottomVav(true)
+        delaySplash()
+        binding = FragmentSplashBinding.inflate(layoutInflater)
 
     }
 
@@ -22,8 +37,22 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash, container, false)
+        return binding.root
     }
 
+    fun delaySplash(){
+        val token = sharedPref.getString("TOKEN", "")
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(3000)
+            if(token == ""){
+                findNavController().navigate(R.id.action_global_loginFragment)
+            } else {
+                findNavController().navigate(R.id.action_global_homeFragment)
+            }
+        }
+    }
+
+    fun initViewModel(){
+        sharedViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+    }
 }

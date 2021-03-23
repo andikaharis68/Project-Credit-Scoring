@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.entity.Account
@@ -19,6 +20,7 @@ import com.andika.project_credit_scoring.util.ResourceStatus
 import com.andika.project_credit_scoring.util.component.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_add_account.view.*
+import kotlinx.android.synthetic.main.fragment_account.*
 
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
@@ -83,6 +85,26 @@ class AccountFragment : Fragment() {
                 textAll.setTextColor(Color.parseColor("#ffffff"))
                 textNotVerified.setTextColor(Color.parseColor("#000000"))
             }
+
+            btnAddAccount.setOnClickListener{
+                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
+                val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
+                val alertDialog = dialogBuilder.show()
+                dialogView.dialog_btn_create.setOnClickListener {
+//                    accountRequestValue = Account(
+//                        name = dialogView.dialog_et_name.text.toString(),
+//                        email = dialogView.dialog_et_email.text.toString(),
+//                        password = dialogView.dialog_et_password.text.toString(),
+//                        role = dialogView.dialog_et_role.text.toString()
+//                    )
+//                    viewModel.addAccount(accountRequestValue!!)
+                    viewModel.getALlAccount()
+                    alertDialog.dismiss()
+                }
+                dialogView.dialogBtnCancel.setOnClickListener {
+                    alertDialog.dismiss()
+                }
+            }
         }
         return binding.root
     }
@@ -107,24 +129,3 @@ class AccountFragment : Fragment() {
     }
 }
 
-
-
-//addAccount.setOnClickListener{
-//    val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
-//    val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
-//    val alertDialog = dialogBuilder.show()
-//    dialogView.dialog_btn_create.setOnClickListener {
-//        accountRequestValue = Account(
-//            name = dialogView.dialog_et_name.text.toString(),
-//            email = dialogView.dialog_et_email.text.toString(),
-//            password = dialogView.dialog_et_password.text.toString(),
-//            role = dialogView.dialog_et_role.text.toString()
-//        )
-//        viewModel.addAccount(accountRequestValue!!)
-//        viewModel.getALlAccount()
-//        alertDialog.dismiss()
-//    }
-//    dialogView.dialogBtnCancel.setOnClickListener {
-//        alertDialog.dismiss()
-//    }
-//}

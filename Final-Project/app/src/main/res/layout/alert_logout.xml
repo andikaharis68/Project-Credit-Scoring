@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/account_dialog"
+    android:background="@drawable/round_corner_grey"
+    tools:context=".presentation.home.HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="20dp"
+        android:paddingRight="40dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Do you want to exit?"
+                android:fontFamily="@font/poppins_med"
+                android:textSize="25sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="60dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/alertBtnCancel"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/yellow_freesia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="cancel"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/alert_btn_exit"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/red_fruchsia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="exit"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:text="Exit button confirmation"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+</FrameLayout>

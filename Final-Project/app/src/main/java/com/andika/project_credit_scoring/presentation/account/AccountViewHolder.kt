@@ -18,20 +18,10 @@ class AccountViewHolder(view: View, private val accountClickListener: AccountCli
                 cardTextApproval.visibility = View.GONE
             } else {
                 cardItemAccount.setCardBackgroundColor(Color.parseColor("#ffffff"))
-                cardLayoutButton.visibility= View.GONE
             }
             nameTv.text = account?.username
             emailTv.text = account?.email
             roleTv.text = account?.roles
-            cardBtnApprove.setOnClickListener {
-                accountClickListener.activateAccount(account?.id!!)
-                cardLayoutButton.visibility= View.GONE
-            }
-            cardBtnReject.setOnClickListener {
-                cardTextApproval.visibility = View.VISIBLE
-                cardLayoutButton.visibility= View.GONE
-                cardTextApproval.text = "This account is rejected!"
-            }
         }
     }
 }

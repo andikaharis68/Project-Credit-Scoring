@@ -13,6 +13,7 @@ import com.andika.project_credit_scoring.presentation.history.HistoryViewHolder
 class TransactionViewAdapter(private val transactionClickListener: TransactionClickListener) : RecyclerView.Adapter<TransactionViewHolder>() {
 
     var transaction = ArrayList<ListTransaction?>()
+    var statusNow = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -23,14 +24,15 @@ class TransactionViewAdapter(private val transactionClickListener: TransactionCl
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
         val transaction = transaction[position]
         Log.d("HH", "$transaction")
-        holder.bind(transaction)
+        holder.bind(transaction, statusNow)
     }
 
     override fun getItemCount(): Int {
         return transaction.size
     }
 
-    fun setData(data: List<ListTransaction?>) {
+    fun setData(data: List<ListTransaction?>, status : String) {
+        statusNow = status
         transaction.clear()
         transaction.addAll(data)
         notifyDataSetChanged()

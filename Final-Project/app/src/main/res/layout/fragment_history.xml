@@ -24,14 +24,28 @@
                 android:orientation="vertical"
                 android:paddingVertical="20dp">
 
-                <TextView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/poppins_med"
-                    android:text="Report Transaction"
-                    android:textColor="@color/white"
-                    android:textSize="23sp" />
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btn_back"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/ic_back"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/poppins_med"
+                        android:text="Report Transaction"
+                        android:textColor="@color/white"
+                        android:textSize="23sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

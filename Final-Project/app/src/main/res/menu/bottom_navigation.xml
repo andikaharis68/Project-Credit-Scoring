@@ -2,18 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
-        android:icon="@drawable/house"
+        android:icon="@drawable/ic_home_24"
         android:title="Home" />
     <item
         android:id="@+id/nav_transaction"
-        android:icon="@drawable/deal"
+        android:icon="@drawable/nav_transaction_24"
         android:title="Transaction" />
     <item
         android:id="@+id/nav_history"
-        android:icon="@drawable/clock"
+        android:icon="@drawable/nav_report"
         android:title="History" />
-    <item
-        android:id="@+id/nav_account"
-        android:icon="@drawable/accounting"
-        android:title="Account" />
 </menu>

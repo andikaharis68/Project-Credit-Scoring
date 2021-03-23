@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentHistoryBinding
@@ -20,7 +21,9 @@ import com.andika.project_credit_scoring.presentation.history.HistoryViewAdapter
 import com.andika.project_credit_scoring.presentation.history.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_approval_transaction.view.*
+import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_transaction.*
+import kotlinx.android.synthetic.main.fragment_transaction.btn_back
 
 @AndroidEntryPoint
 class TransactionFragment : Fragment() {
@@ -30,6 +33,7 @@ class TransactionFragment : Fragment() {
     lateinit var viewModel: TransactionViewModel
     lateinit var rvAdapter: TransactionViewAdapter
     lateinit var requestApproveValue: RequestApproval
+    var statusNow = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,6 @@ class TransactionFragment : Fragment() {
         subscribe()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,7 +57,7 @@ class TransactionFragment : Fragment() {
                 Log.d("IT", "${it!!.data}")
                 it?.data?.list?.apply {
                     Log.d("THIS", "$this")
-                    rvAdapter.setData(this)
+                    rvAdapter.setData(this, statusNow)
                 }
             }
 
@@ -84,7 +87,7 @@ class TransactionFragment : Fragment() {
             dialogView.dialog_credit_ratio.text = "${it?.creditRatio}%"
             dialogView.dialog_main_loan.text = "Rp. ${it?.mainLoan}"
             dialogView.dialog_interest_rate.text = "${it?.interestRate}%"
-            dialogView.dialog_tenor.text = "${it?.tenor} Mount"
+            dialogView.dialog_tenor.text = "${it?.tenor} month"
             dialogView.dialog_reason_type.text = it?.needType
             if(it?.employeeCriteria == true) {
                 dialogView.dialog_employee_criteria.text = "Pass"
@@ -105,11 +108,13 @@ class TransactionFragment : Fragment() {
                 requestApproveValue = RequestApproval(false, it?.id)
                 viewModel.approveTransaction(requestApproveValue)
                 alertDialog.dismiss()
+                statusNow = "REJECT"
             }
             dialogView.dialog_btn_approve.setOnClickListener { itReject ->
                 requestApproveValue = RequestApproval(true, it?.id)
                 viewModel.approveTransaction(requestApproveValue)
                 alertDialog.dismiss()
+                statusNow = "APPROVE"
             }
         }
     }

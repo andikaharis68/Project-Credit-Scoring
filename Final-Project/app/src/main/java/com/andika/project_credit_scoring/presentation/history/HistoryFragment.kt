@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentHistoryBinding
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.dialog_add_account.view.*
 import kotlinx.android.synthetic.main.dialog_history.*
 import kotlinx.android.synthetic.main.dialog_history.view.*
 import kotlinx.android.synthetic.main.dialog_loading.*
+import kotlinx.android.synthetic.main.fragment_account.*
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
@@ -94,7 +96,7 @@ class HistoryFragment : Fragment() {
             dialogView.dialog_text_credit_ratio.text = "${it?.approval?.transaction?.creditRatio}%"
             dialogView.dialog_text_installment.text = it?.approval?.transaction?.installment?.toString()
             dialogView.dialog_text_total_installment.text = it?.approval?.transaction?.installmentTotal?.toString()
-            dialogView.dialog_text_tenor.text = "${it?.approval?.transaction?.tenor} mount"
+            dialogView.dialog_text_tenor.text = "${it?.approval?.transaction?.tenor} month"
             if (it?.approval?.transaction?.financeCriteria == true){
                 dialogView.dialog_text_financial_criteria.text = "Pass"
             } else {
