@@ -4,6 +4,7 @@ import android.util.Log
 import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.api.AccountApi
 import com.andika.project_credit_scoring.entity.History
+import com.andika.project_credit_scoring.entity.RequestAccount
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -14,7 +15,8 @@ class AccountRepositoryImpl @Inject constructor(private val accountApi: AccountA
         Log.d("DATA", "${accountApi.getAccount()}")
     }
 
-    override suspend fun activateAccount(id : String) : Response<Account> {
-        return accountApi.activateAccount(id)
+    override suspend fun addAccount(requestAccount: RequestAccount): Response<Account> {
+        return accountApi.addAccount(requestAccount)
     }
+
 }

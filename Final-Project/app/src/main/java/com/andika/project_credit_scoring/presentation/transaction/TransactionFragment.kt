@@ -2,21 +2,16 @@ package com.andika.project_credit_scoring.presentation.transaction
 
 import android.app.AlertDialog
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
-import com.andika.project_credit_scoring.databinding.FragmentHistoryBinding
 import com.andika.project_credit_scoring.databinding.FragmentTransactionBinding
-import com.andika.project_credit_scoring.entity.RequestApproval
 import com.andika.project_credit_scoring.presentation.history.HistoryViewAdapter
 import com.andika.project_credit_scoring.presentation.history.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint

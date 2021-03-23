@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.di.qualifier.ServiceAccount
+import com.andika.project_credit_scoring.entity.RequestAccount
 import com.andika.project_credit_scoring.repositories.AccountRepository
 import com.andika.project_credit_scoring.util.ResourceState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,9 +45,9 @@ class AccountViewModel @Inject constructor(@ServiceAccount val repository: Accou
             }
         }
 
-    override fun activateAccount(id: String) {
+    fun addAccount(requestAccount: RequestAccount) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = repository.activateAccount(id)
+            val response = repository.addAccount(requestAccount)
             if(response.isSuccessful) {
                 _accountLiveData.postValue(ResourceState.success(response.body()))
             } else {

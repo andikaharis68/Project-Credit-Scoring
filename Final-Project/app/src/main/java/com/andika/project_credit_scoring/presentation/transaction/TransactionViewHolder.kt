@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.CardViewTransactionBinding
 import com.andika.project_credit_scoring.entity.ListTransaction
-import com.andika.project_credit_scoring.entity.RequestApproval
 
 class TransactionViewHolder(view: View, private val historyClickListener: TransactionClickListener) : RecyclerView.ViewHolder(view) {
 

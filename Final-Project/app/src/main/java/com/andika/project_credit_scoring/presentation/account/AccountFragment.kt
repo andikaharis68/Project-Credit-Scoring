@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.databinding.FragmentAccountBinding
+import com.andika.project_credit_scoring.entity.RequestAccount
 import com.andika.project_credit_scoring.util.ResourceStatus
 import com.andika.project_credit_scoring.util.component.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +30,7 @@ class AccountFragment : Fragment() {
     lateinit var viewModel: AccountViewModel
     lateinit var rvAdapter: AccountViewAdapter
     lateinit var loadingDialog: AlertDialog
+    lateinit var accountRequestValue : RequestAccount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,13 +93,14 @@ class AccountFragment : Fragment() {
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
                 val alertDialog = dialogBuilder.show()
                 dialogView.dialog_btn_create.setOnClickListener {
-//                    accountRequestValue = Account(
-//                        name = dialogView.dialog_et_name.text.toString(),
-//                        email = dialogView.dialog_et_email.text.toString(),
-//                        password = dialogView.dialog_et_password.text.toString(),
-//                        role = dialogView.dialog_et_role.text.toString()
-//                    )
-//                    viewModel.addAccount(accountRequestValue!!)
+                    accountRequestValue = RequestAccount(
+                        fullName = dialogView.dialog_et_name.text.toString(),
+                        email = dialogView.dialog_et_email.text.toString(),
+                        password = dialogView.dialog_et_password.text.toString(),
+                        username = "",
+                        role = "dialogView.dialog_et_role.text.toString()"
+                    )
+                    viewModel.addAccount(accountRequestValue!!)
                     viewModel.getALlAccount()
                     alertDialog.dismiss()
                 }

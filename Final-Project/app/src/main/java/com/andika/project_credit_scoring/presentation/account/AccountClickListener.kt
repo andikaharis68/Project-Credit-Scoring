@@ -4,5 +4,5 @@ import com.andika.project_credit_scoring.entity.Account
 
 
 interface AccountClickListener {
-    fun activateAccount(id : String)
+
 }
