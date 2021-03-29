@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.andika.project_credit_scoring.util.Constanst.TOKEN
@@ -16,8 +17,11 @@ import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentLoginBinding
 import com.andika.project_credit_scoring.login.RequestLogin
 import com.andika.project_credit_scoring.util.Constanst.FULLNAME
+import com.andika.project_credit_scoring.util.Constanst.MASTER
 import com.andika.project_credit_scoring.util.Constanst.ROLE
+import com.andika.project_credit_scoring.util.Constanst.SUPERVISOR
 import com.andika.project_credit_scoring.util.Constanst.USERNAME
+import com.andika.project_credit_scoring.util.component.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,10 +32,11 @@ class LoginFragment : Fragment() {
     lateinit var viewModel: LoginViewModel
     lateinit var requestLoginValue: RequestLogin
     lateinit var sharedViewModel: MainActivityViewModel
+    lateinit var loadingDialog: AlertDialog
 
     @Inject
     lateinit var sharedPref: SharedPreferences
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentLoginBinding.inflate(layoutInflater)
@@ -44,7 +49,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        loadingDialog = LoadingDialog.build(requireContext())
         binding.apply {
             buttonSubmit.setOnClickListener {
                 val username = usernameInputText.text.toString()
@@ -58,18 +63,28 @@ class LoginFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        sharedViewModel =
+            ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
     }
 
     private fun subscribe() {
         viewModel.getValidation().observe(this) { itValid ->
-            Log.d("STATUS", "$itValid")
+            loadingDialog.show()
             binding.apply {
-                if (itValid.email && itValid.username) {
-                    viewModel.postLogin(requestLoginValue)
-                        .observe(requireActivity()) {
-                            when (it?.code) {
-                                200 -> {
+                if (itValid.password && itValid.username) {
+                    viewModel.postLogin(requestLoginValue).observe(requireActivity()) {
+                        when (it?.code) {
+                            200 -> {
+                                loadingDialog.hide()
+                                if (it?.data?.roles == MASTER ) {
+                                    sharedPref.edit()
+                                        .putString(TOKEN, "${it.data?.token}")
+                                        .putString(FULLNAME, "${it.data?.fullName}")
+                                        .putString(ROLE, "${it.data?.roles}")
+                                        .apply()
+                                    findNavController().navigate(R.id.action_global_homeMasterFragment)
+                                    sharedViewModel.hideBottomVav(true)
+                                } else if(it?.data?.roles == SUPERVISOR) {
                                     sharedPref.edit()
                                         .putString(TOKEN, "${it.data?.token}")
                                         .putString(FULLNAME, "${it.data?.fullName}")
@@ -77,30 +92,39 @@ class LoginFragment : Fragment() {
                                         .apply()
                                     findNavController().navigate(R.id.action_global_homeFragment)
                                     sharedViewModel.hideBottomVav(true)
-                                }
-                                401 -> {
+                                } else {
                                     Toast.makeText(
                                         requireContext(),
-                                        "Password or Email invalid! 401",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                400 -> {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Password or Email invalid! 400",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                else -> {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Password or Email invalid!m",
+                                        "You must login as a supervisor",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
                             }
+                            100 -> {
+                                loadingDialog.hide()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "${it?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            else -> {
+                                loadingDialog.hide()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "${it?.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
+                    }
+                } else {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "Invalid password, please try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -110,5 +134,5 @@ class LoginFragment : Fragment() {
         @JvmStatic
         fun newInstance() = LoginFragment()
     }
-    
+
 }

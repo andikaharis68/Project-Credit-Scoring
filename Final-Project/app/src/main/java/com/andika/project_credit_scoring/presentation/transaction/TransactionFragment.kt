@@ -8,22 +8,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentTransactionBinding
-import com.andika.project_credit_scoring.entity.RequestApproval
-import com.andika.project_credit_scoring.presentation.history.HistoryViewAdapter
-import com.andika.project_credit_scoring.presentation.history.HistoryViewModel
+import com.andika.project_credit_scoring.model.transaction.RequestApproval
+import com.andika.project_credit_scoring.util.Constanst
+import com.andika.project_credit_scoring.util.component.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_approval_transaction.view.*
-import kotlinx.android.synthetic.main.fragment_account.*
-import kotlinx.android.synthetic.main.fragment_transaction.*
-import kotlinx.android.synthetic.main.fragment_transaction.btn_back
 import java.text.NumberFormat
 import java.util.*
+import kotlin.math.log
 
 @AndroidEntryPoint
 class TransactionFragment : Fragment() {
@@ -32,6 +31,7 @@ class TransactionFragment : Fragment() {
     lateinit var viewModel: TransactionViewModel
     lateinit var sharedViewModel: MainActivityViewModel
     lateinit var rvAdapter: TransactionViewAdapter
+    lateinit var loadingDialog: androidx.appcompat.app.AlertDialog
     lateinit var requestApproveValue: RequestApproval
     val localeID = Locale("in", "ID")
     val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
@@ -47,30 +47,25 @@ class TransactionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        loadingDialog = LoadingDialog.build(requireContext())
         binding.apply {
             rvAdapter = TransactionViewAdapter(viewModel)
             recyclerViewTransaction.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter
             }
-
             viewModel.getALlTransaction().observe(requireActivity()) {
-                Log.d("IT", "${it!!.data}")
                 it?.data?.list?.apply {
-                    Log.d("THIS", "$this")
                     rvAdapter.setData(this)
                 }
             }
-
             refreshTransaction.setOnRefreshListener {
                 viewModel.getALlTransaction()
             }
-
             btnBack.setOnClickListener{
                 findNavController().navigate(R.id.action_transactionFragment_to_homeFragment)
                 sharedViewModel.hideBottomVav(true)
             }
-
         }
         return binding.root
     }
@@ -85,74 +80,78 @@ class TransactionFragment : Fragment() {
             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_approval_transaction, null)
             val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
             val alertDialog = dialogBuilder.show()
-            dialogView.dialog_name.text = it?.customer?.name
-            dialogView.dialog_address.text = it?.customer?.address
-            dialogView.dialog_email.text = it?.customer?.email
-            dialogView.dialog_number_identity.text = it?.customer?.idNumber.toString()
-            dialogView.dialog_employee_type.text = it?.customer?.employeeType
-            dialogView.dialog_submitter.text = it?.submitter
-            dialogView.dialog_income.text = formatRupiah.format(it?.income)
-            dialogView.dialog_outcome.text = formatRupiah.format(it?.outcome)
-            dialogView.dialog_loan.text = formatRupiah.format(it?.loan)
-            dialogView.dialog_interest.text = formatRupiah.format(it?.interest)
-            dialogView.dialog_credit_ratio.text = "${it?.creditRatio}%"
-            dialogView.dialog_main_loan.text = formatRupiah.format(it?.mainLoan)
-            dialogView.dialog_interest_rate.text = "${it?.interestRate}%"
-            dialogView.dialog_tenor.text = "${it?.tenor} month"
-            dialogView.dialog_reason_type.text = it?.needType
-            if(it?.employeeCriteria == true) {
-                dialogView.dialog_employee_criteria.text = "Pass"
-                dialogView.dialog_employee_criteria.setTextColor(Color.parseColor("#00B1B0"))
-            } else {
-                dialogView.dialog_employee_criteria.text = "Not Pass"
-                dialogView.dialog_employee_criteria.setTextColor(Color.parseColor("#ba0f30"))
-            }
-            if(it?.financeCriteria == true) {
-                dialogView.dialog_financial_criteria.text = "Pass"
-                dialogView.dialog_financial_criteria.setTextColor(Color.parseColor("#00B1B0"))
-            } else {
-                dialogView.dialog_financial_criteria.text = "Not Pass"
-                dialogView.dialog_financial_criteria.setTextColor(Color.parseColor("#ba0f30"))
-            }
-            dialogView.dialog_note.text = it?.notes
-            dialogView.dialog_btn_reject.setOnClickListener { itReject ->
-                requestApproveValue = RequestApproval(false, it?.id)
-                viewModel.approveTransaction(requestApproveValue)
-                alertDialog.dismiss()
-            }
-            dialogView.dialog_btn_approve.setOnClickListener { itReject ->
-                requestApproveValue = RequestApproval(true, it?.id)
-                viewModel.approveTransaction(requestApproveValue)
-                alertDialog.dismiss()
+            dialogView.apply {
+                dialog_name.text = it?.transaction?.customer?.name
+                dialog_address.text = it?.transaction?.customer?.address
+                dialog_email.text = it?.transaction?.customer?.email
+                dialog_number_identity.text = it?.transaction?.customer?.idNumber.toString()
+                dialog_employee_type.text = it?.transaction?.customer?.employeeType
+                dialog_submitter.text = it?.transaction?.submitter
+                dialog_income.text = formatRupiah.format(it?.transaction?.income)
+                dialog_outcome.text = formatRupiah.format(it?.transaction?.outcome)
+                dialog_loan.text = formatRupiah.format(it?.transaction?.loan)
+                dialog_interest.text = formatRupiah.format(it?.transaction?.interest)
+                dialog_credit_ratio.text = "${it?.transaction?.creditRatio}%"
+                dialog_main_loan.text = formatRupiah.format(it?.transaction?.mainLoan)
+                dialog_interest_rate.text = "${it?.transaction?.interestRate}%"
+                dialog_tenor.text = "${it?.transaction?.tenor} month"
+                dialog_reason_type.text = it?.transaction?.needType.toString()
+                if(it?.transaction?.employeeCriteria == true) {
+                    dialog_employee_criteria.text = "Pass"
+                    dialog_employee_criteria.setTextColor(Color.parseColor("#00B1B0"))
+                } else {
+                    dialog_employee_criteria.text = "Not Pass"
+                    dialog_employee_criteria.setTextColor(Color.parseColor("#ba0f30"))
+                }
+                if(it?.transaction?.financeCriteria == true) {
+                    dialog_financial_criteria.text = "Pass"
+                    dialog_financial_criteria.setTextColor(Color.parseColor("#00B1B0"))
+                } else {
+                    dialog_financial_criteria.text = "Not Pass"
+                    dialog_financial_criteria.setTextColor(Color.parseColor("#ba0f30"))
+                }
+                dialog_note.text = it?.transaction?.notes
+                dialog_btn_reject.setOnClickListener { itReject ->
+                    requestApproveValue = RequestApproval(false)
+                    aprrovalTransaction(it?.id.toString() , requestApproveValue)
+                    alertDialog.dismiss()
+                }
+                dialog_btn_approve.setOnClickListener { itReject ->
+                    requestApproveValue = RequestApproval(true)
+                    aprrovalTransaction(it?.id.toString(), requestApproveValue)
+                    alertDialog.dismiss()
+                }
             }
         }
     }
+    fun aprrovalTransaction(id : String, requestApproval: RequestApproval) =
+        viewModel.approveTransaction(id, requestApproval).observe(this){
+            loadingDialog.show()
+            when (it?.code) {
+                200 -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "Success transaction from ${it.data?.transaction?.customer?.name}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                100 -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
 }
-
-//fun getActivityApi() = viewModel.getCheckActivityApi().observe(requireActivity()) { res ->
-//    binding.apply {
-//        alertDialog.show()
-//        when (res?.code) {
-//            200 -> {
-//                alertDialog.hide()
-//                buttonStart.visibility = View.GONE
-//                buttonStop.visibility = View.VISIBLE
-//                viewModel.getMyTasksApi().observe(requireActivity()) { data ->
-//                    handleGetApi(data)
-//                }
-//            }
-//            404 -> {
-//                alertDialog.hide()
-//                buttonStart.visibility = View.VISIBLE
-//                buttonStop.visibility = View.GONE
-//                viewModel.getMyTasksApi().observe(requireActivity()) { data ->
-//                    handleGetApi(data)
-//                }
-//            }
-//            else -> {
-//                alertDialog.hide()
-//                Log.d("SOMETHING WRONG!", "$res")
-//            }
-//        }
-//    }
-//}

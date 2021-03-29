@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentSplashBinding
+import com.andika.project_credit_scoring.util.Constanst.MASTER
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -42,12 +43,17 @@ class SplashFragment : Fragment() {
 
     fun delaySplash(){
         val token = sharedPref.getString("TOKEN", "")
+        val role = sharedPref.getString("ROLE", "")
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000)
             if(token == ""){
                 findNavController().navigate(R.id.action_global_loginFragment)
             } else {
-                findNavController().navigate(R.id.action_global_homeFragment)
+                if (role == MASTER) {
+                    findNavController().navigate(R.id.action_global_homeMasterFragment)
+                } else {
+                    findNavController().navigate(R.id.action_global_homeFragment)
+                }
             }
         }
     }

@@ -26,5 +26,8 @@ internal abstract class RepoModule {
     @Binds
     abstract fun bindRepositoryTransaction(transactionRepositoryImpl: TransactionRepositoryImpl): TransactionRepository
 
+    @Binds
+    abstract fun bindRepositoryRole(roleRepositoryImpl: RoleRepositoryImpl): RoleRepository
+
 }
 

@@ -349,7 +349,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Installment          : Rp."
+                            android:text="Installment          :"
                             android:fontFamily="@font/poppins_med"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp"/>
@@ -357,14 +357,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Installment : Rp."
+                            android:text="Total Installment :"
                             android:fontFamily="@font/poppins_med"
                             android:textColor="@color/dark_blue"
                             android:textSize="15sp"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:paddingHorizontal="5dp"
                         android:orientation="vertical">
 
@@ -374,7 +375,6 @@
                             android:layout_height="wrap_content"
                             android:text="3000000"
                             android:fontFamily="@font/poppins_med"
-                            android:textColor="@color/dark_blue"
                             android:textSize="15sp"/>
 
                         <TextView
@@ -383,12 +383,12 @@
                             android:layout_height="wrap_content"
                             android:text="4500000"
                             android:fontFamily="@font/poppins_med"
-                            android:textColor="@color/dark_blue"
                             android:textSize="15sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:layout_marginLeft="15dp"
                         android:paddingLeft="10dp"
                         android:orientation="vertical">

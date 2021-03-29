@@ -53,12 +53,14 @@ class HomeFragment : Fragment() {
             textInfoUser.text = user
             textInfoRupiah.text = formatRupiah.format(1200000)
             textInfoRole.text = "You're access as a $role"
-            if (role == "SUPERVISOR") {
-                navigationAccount.visibility = View.GONE
+            highlightMenu.setOnClickListener {
+                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_home, null)
+                val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
+                val alertDialog = dialogBuilder.show()
             }
-            homeBtnLogin.setOnClickListener {
-                findNavController().navigate(R.id.action_global_loginFragment)
-                sharedViewModel.hideBottomVav(true)
+            homeBtnProfile.setOnClickListener {
+                findNavController().navigate(R.id.action_global_profileFragment)
+                sharedViewModel.hideBottomVav(false)
             }
             homeBtnTransaction.setOnClickListener {
                 findNavController().navigate(R.id.action_global_transactionFragment)
@@ -88,10 +90,6 @@ class HomeFragment : Fragment() {
                     sharedViewModel.hideBottomVav(true)
                     alertDialog.dismiss()
                 }
-            }
-            homeBtnAccount.setOnClickListener {
-                findNavController().navigate(R.id.action_global_accountFragment)
-                sharedViewModel.hideBottomVav(true)
             }
         }
         return binding.root

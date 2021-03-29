@@ -6,6 +6,7 @@ import com.andika.project_credit_scoring.di.qualifier.PostAuth
 import com.andika.project_credit_scoring.login.RequestLogin
 import com.andika.project_credit_scoring.login.ResponseLogin
 import com.andika.project_credit_scoring.login.ValidationLogin
+import com.andika.project_credit_scoring.model.roles.ResponseRole
 import com.andika.project_credit_scoring.repositories.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -31,9 +32,30 @@ class LoginViewModel @Inject constructor(@PostAuth val repository: LoginReposito
                     Log.d("ERROR", "$e")
                     response =
                         ResponseLogin(
-                            code = 400,
+                            code = 100,
                             data = null,
-                            message = "Email or Password invalid!",
+                            message = "Connection error please try again",
+                        )
+                } finally {
+                    emit(response)
+                }
+            }
+        }
+
+    fun getRole() =
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            withTimeout(5000) {
+                var response: ResponseRole? = null
+                try {
+                    response = repository.getRole()
+                    Log.d("ROLE","$response")
+                } catch (e: Exception) {
+                    Log.d("ERROR", "$e")
+                    response =
+                        ResponseRole(
+                            code = 100,
+                            data = null,
+                            message = "Connection error please try again",
                         )
                 } finally {
                     emit(response)
@@ -42,12 +64,10 @@ class LoginViewModel @Inject constructor(@PostAuth val repository: LoginReposito
         }
 
     fun validation(requestLogin: RequestLogin) {
-        if (requestLogin.password.length <= 15) {
-            _validation.postValue(ValidationLogin(email = true, username = true))
-        } else if (requestLogin.password.length <= 15) {
-            _validation.postValue(ValidationLogin(email = false, username = true))
+        if (requestLogin.password.length >= 6) {
+            _validation.postValue(ValidationLogin(password = true, username = true))
         } else {
-            _validation.postValue(ValidationLogin(email = false, username = false))
+            _validation.postValue(ValidationLogin(password = false, username = true))
         }
     }
 }

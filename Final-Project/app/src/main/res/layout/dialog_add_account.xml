@@ -31,10 +31,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Input Name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_med"
+                    android:textColor="@color/red_fruchsia"/>
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/dialog_et_name"
                 android:background="@drawable/round_corner_white"
-                android:layout_marginVertical="10dp"
                 android:paddingHorizontal="15dp"
                 style="@style/EditText.PoppinsNormal14spGrey"
                 android:layout_width="match_parent"
@@ -43,10 +63,31 @@
                 android:hint="Name"
                 android:inputType="text" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Input Username"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_med"
+                    android:textColor="@color/red_fruchsia"/>
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/dialog_et_username"
                 android:background="@drawable/round_corner_white"
-                android:layout_marginVertical="10dp"
                 android:paddingHorizontal="15dp"
                 style="@style/EditText.PoppinsNormal14spGrey"
                 android:layout_width="match_parent"
@@ -54,6 +95,28 @@
                 android:contentDescription="test"
                 android:hint="Username"
                 android:inputType="text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Input Email"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_med"
+                    android:textColor="@color/red_fruchsia"/>
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/dialog_et_email"
@@ -67,16 +130,26 @@
                 android:hint="Email"
                 android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/dialog_et_password"
-                android:layout_marginBottom="10dp"
-                android:paddingHorizontal="15dp"
-                android:background="@drawable/round_corner_white"
-                style="@style/EditText.PoppinsNormal14spGrey"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:hint="Password"
-                android:inputType="textPassword" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Role"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_med"
+                    android:textColor="@color/red_fruchsia"/>
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/spinner_role"

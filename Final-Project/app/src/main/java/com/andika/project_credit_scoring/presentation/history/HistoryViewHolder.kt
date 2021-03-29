@@ -1,13 +1,11 @@
 package com.andika.project_credit_scoring.presentation.history
 
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.CardViewHistoryBinding
-import com.andika.project_credit_scoring.entity.History
-import com.andika.project_credit_scoring.entity.ListHistory
+import com.andika.project_credit_scoring.model.history.ListHistory
 import java.text.NumberFormat
 import java.util.*
 
@@ -20,7 +18,7 @@ class HistoryViewHolder(view: View, private val historyClickListener: HistoryCli
     fun bind(history: ListHistory?) {
         binding.apply {
             cardTextName.text = history?.approval?.transaction?.customer?.name
-            cardTextPrice1.text = formatRupiah.format(history?.approval?.transaction?.loan)
+//            cardTextPrice1.text = formatRupiah.format(history?.approval?.transaction?.loan.toString())
             cardTextKreditRatio.text = "${history?.approval?.transaction?.creditRatio} %"
             cardTextDate.text = history?.approvalDate
             cardTextStaff.text = history?.approval?.transaction?.submitter

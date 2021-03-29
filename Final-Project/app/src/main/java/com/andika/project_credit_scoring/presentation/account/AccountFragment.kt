@@ -11,16 +11,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat
+import android.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
-import com.andika.project_credit_scoring.entity.Account
 import com.andika.project_credit_scoring.databinding.FragmentAccountBinding
-import com.andika.project_credit_scoring.entity.RequestAccount
-import com.andika.project_credit_scoring.util.ResourceStatus
+import com.andika.project_credit_scoring.model.account.RequestAddAccount
 import com.andika.project_credit_scoring.util.component.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.alert_delete_account.view.*
@@ -36,9 +33,9 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var binding: FragmentAccountBinding
     lateinit var viewModel: AccountViewModel
     lateinit var rvAdapter: AccountViewAdapter
-    lateinit var loadingDialog: AlertDialog
-    lateinit var accountRequestValue: RequestAccount
-    private var role : String = "STAFF"
+    lateinit var loadingDialog: androidx.appcompat.app.AlertDialog
+    private lateinit var accountRequestValue: RequestAddAccount
+    private var role: String = "STAFF"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,23 +50,17 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        loadingDialog = LoadingDialog.build(requireContext())
         binding.apply {
             rvAdapter = AccountViewAdapter(viewModel)
             recyclerViewAccount.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter
             }
-
-            viewModel.getALlAccount().observe(requireActivity()) {
-                Log.d("IT", "${it!!.data}")
-                it?.data?.list?.apply {
-                    Log.d("THIS", "$this")
-                    rvAdapter.setData(this)
-                }
-            }
+            getAllAccount()
 
             btnBack.setOnClickListener {
-                findNavController().navigate(R.id.action_accountFragment_to_homeFragment)
+                findNavController().navigate(R.id.action_accountFragment_to_homeMasterFragment)
             }
 
             textVerified.setOnClickListener {
@@ -101,20 +92,18 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
             btnAddAccount.setOnClickListener {
-                val dialogView =
-                    LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
+                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
                 val alertDialog = dialogBuilder.show()
                 dialogView.dialog_btn_create.setOnClickListener {
-                    accountRequestValue = RequestAccount(
+                    accountRequestValue = RequestAddAccount(
                         fullName = dialogView.dialog_et_name.text.toString(),
                         email = dialogView.dialog_et_email.text.toString(),
-                        password = dialogView.dialog_et_password.text.toString(),
+                        profilePicture = "",
                         username = dialogView.dialog_et_username.text.toString(),
                         role = role
                     )
-                    viewModel.addAccount(accountRequestValue!!)
-                    viewModel.getALlAccount()
+                    addAccount(accountRequestValue)
                     alertDialog.dismiss()
                 }
                 dialogView.dialogBtnCancel.setOnClickListener {
@@ -140,30 +129,93 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun subscribe() {
-        viewModel.activateAccountLiveData.observe(this) {
-            when (it.status) {
-                ResourceStatus.LOADING -> Log.d("APP", "Loading..")
-                ResourceStatus.SUCCESS -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Account success Activated",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
         viewModel.deleteLiveData.observe(this) { id ->
             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.alert_delete_account, null)
-            val dialogBuilder = android.app.AlertDialog.Builder(requireContext()).setView(dialogView)
+            val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
             val alertDialog = dialogBuilder.show()
             dialogView.alert_btn_cancel_delete.setOnClickListener {
                 alertDialog.dismiss()
             }
             dialogView.alert_btn_delete.setOnClickListener {
-                viewModel.deleteAccount(id!!)
+                deleteAccount(id!!)
+                alertDialog.dismiss()
             }
         }
+
     }
+
+    private fun getAllAccount() =
+        viewModel.getALlAccount().observe(requireActivity()) {
+            loadingDialog.show()
+            when (it?.code) {
+                200 -> {
+                    loadingDialog.hide()
+                    it?.data?.list?.apply {
+                        Log.d("THIS", "$this")
+                        rvAdapter.setData(this)
+                    }
+                }
+                else -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+    private fun addAccount(requestAddAccount: RequestAddAccount) =
+        viewModel.addAccount(requestAddAccount).observe(requireActivity()) {
+            binding.apply {
+                loadingDialog.show()
+                when (it?.code) {
+                    200 -> {
+                        loadingDialog.hide()
+                        Toast.makeText(
+                            requireContext(),
+                            "Success add this account",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> {
+                        loadingDialog.hide()
+                        Toast.makeText(
+                            requireContext(),
+                            "${it?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
+    private fun deleteAccount(id: String) =
+        viewModel.deleteAccount(id).observe(requireActivity()) {
+            binding.apply {
+                loadingDialog.show()
+                when (it?.code) {
+                    200 -> {
+                        loadingDialog.hide()
+                        Toast.makeText(
+                            requireContext(),
+                            "Success delete this account",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> {
+                        loadingDialog.hide()
+                        Toast.makeText(
+                            requireContext(),
+                            "${it?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
 
     //spinner
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -172,5 +224,10 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
     }
+
 }
+
+
+
+
 

@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
-import com.andika.project_credit_scoring.entity.Account
-import com.andika.project_credit_scoring.entity.ListAccount
+import com.andika.project_credit_scoring.model.account.ListAccount
 
 class AccountViewAdapter (private val accountClickListener: AccountClickListener) : RecyclerView.Adapter<AccountViewHolder>() {
 

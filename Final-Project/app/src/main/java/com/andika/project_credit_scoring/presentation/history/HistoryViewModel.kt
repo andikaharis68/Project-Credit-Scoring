@@ -5,19 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.andika.project_credit_scoring.entity.Account
-import com.andika.project_credit_scoring.entity.History
-import com.andika.project_credit_scoring.entity.ListHistory
+import com.andika.project_credit_scoring.model.history.ListHistory
+import com.andika.project_credit_scoring.model.history.ResponseHistory
 import com.andika.project_credit_scoring.repositories.HistoryRepository
-import com.andika.project_credit_scoring.util.ResourceState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import retrofit2.Response
 import javax.inject.Inject
-import kotlin.math.log
 
 //@Inject constructor
 
@@ -34,17 +28,58 @@ class HistoryViewModel @Inject constructor(private val repository: HistoryReposi
     fun getALlHistory() =
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             withTimeout(5000) {
-                var response: History? = null
+                var response: ResponseHistory? = null
                 try {
                     response = repository.getAllHistory()
+                } catch (e: Exception) {
+                    Log.d("ERROR","$e")
+                    response =
+                        ResponseHistory(
+                            code = 100,
+                            data = null,
+                            message = "Connection error please try again",
+                        )
+                } finally {
+                    emit(response)
+                }
+            }
+        }
+    fun getApprovedHistory() =
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            withTimeout(5000) {
+                var response: ResponseHistory? = null
+                try {
+                    response = repository.getApprovedHistory()
+                    for (i in response.data?.list!!){
+                        Log.d("RESPONSE", "$response")
+                    }
+                } catch (e: Exception) {
+                    Log.d("ERROR","$e")
+                    response =
+                        ResponseHistory(
+                            code = 100,
+                            data = null,
+                            message = "Connection error please try again",
+                        )
+                } finally {
+                    emit(response)
+                }
+            }
+        }
+    fun getRejectedHistory() =
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            withTimeout(5000) {
+                var response: ResponseHistory? = null
+                try {
+                    response = repository.getRejectedHistory()
                     Log.d("RESPONSE","$response")
                 } catch (e: Exception) {
                     Log.d("ERROR","$e")
                     response =
-                        History(
-                            code = 400,
+                        ResponseHistory(
+                            code = 100,
                             data = null,
-                            message = "Email or Password invalid!",
+                            message = "Connection error please try again",
                         )
                 } finally {
                     emit(response)

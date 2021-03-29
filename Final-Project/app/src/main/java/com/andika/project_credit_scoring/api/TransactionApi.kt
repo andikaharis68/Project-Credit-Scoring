@@ -1,20 +1,16 @@
 package com.andika.project_credit_scoring.api
 
-import com.andika.project_credit_scoring.entity.Account
-import com.andika.project_credit_scoring.entity.RequestApproval
-import com.andika.project_credit_scoring.entity.Transaction
-import com.andika.project_credit_scoring.login.RequestLogin
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import com.andika.project_credit_scoring.model.transaction.RequestApproval
+import com.andika.project_credit_scoring.model.transaction.ResponseApproval
+import com.andika.project_credit_scoring.model.transaction.ResponseTransaction
+import retrofit2.http.*
 
 interface TransactionApi {
 
-    @GET("transaction")
-    suspend fun getTransaction(): Transaction
+    @GET("approval/waiting")
+    suspend fun getTransaction(): ResponseTransaction
 
-    @POST("approval/{id}")
-    suspend fun approvalTransaction(@Path("id") id : String, @Body requestApproval: RequestApproval)
+    @PATCH("approval/{id}")
+    suspend fun approvalTransaction(@Path("id") id : String, @Body requestApproval: RequestApproval) : ResponseApproval
 
 }

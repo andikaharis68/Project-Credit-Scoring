@@ -1,11 +1,11 @@
-package com.andika.project_credit_scoring.entity
+package com.andika.project_credit_scoring.model.account
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Account(
+data class ResponseAccount(
 
 	@field:SerializedName("code")
 	val code: Int? = null,
@@ -18,6 +18,34 @@ data class Account(
 
 	@field:SerializedName("timestamp")
 	val timestamp: String? = null
+) : Parcelable
+
+@Parcelize
+data class ListAccount(
+
+	@field:SerializedName("profilePicture")
+	val profilePicture: String? = null,
+
+	@field:SerializedName("role")
+	val role: String? = null,
+
+	@field:SerializedName("isVerified")
+	val isVerified: Boolean? = null,
+
+	@field:SerializedName("dateRegister")
+	val dateRegister: String? = null,
+
+	@field:SerializedName("fullName")
+	val fullName: String? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null,
+
+	@field:SerializedName("email")
+	val email: String? = null,
+
+	@field:SerializedName("username")
+	val username: String? = null
 ) : Parcelable
 
 @Parcelize
@@ -34,35 +62,4 @@ data class DataAccount(
 
 	@field:SerializedName("list")
 	val list: List<ListAccount?>? = null
-) : Parcelable
-
-@Parcelize
-data class ListAccount(
-
-	@field:SerializedName("profilePicture")
-	val profilePicture: String? = null,
-
-	@field:SerializedName("isVerified")
-	val isVerified: Boolean? = null,
-
-	@field:SerializedName("roles")
-	val roles: String? = null,
-
-	@field:SerializedName("dateRegister")
-	val dateRegister: String? = null,
-
-	@field:SerializedName("fullName")
-	val fullName: String? = null,
-
-	@field:SerializedName("active")
-	val active: Boolean? = null,
-
-	@field:SerializedName("id")
-	val id: String? = null,
-
-	@field:SerializedName("email")
-	val email: String? = null,
-
-	@field:SerializedName("username")
-	val username: String? = null
 ) : Parcelable

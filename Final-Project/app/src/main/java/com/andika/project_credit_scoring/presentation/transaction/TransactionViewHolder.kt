@@ -3,9 +3,8 @@ package com.andika.project_credit_scoring.presentation.transaction
 import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.CardViewTransactionBinding
-import com.andika.project_credit_scoring.entity.ListTransaction
+import com.andika.project_credit_scoring.model.transaction.ListTransaction
 import java.text.NumberFormat
 import java.util.*
 
@@ -17,19 +16,19 @@ class TransactionViewHolder(view: View, private val historyClickListener: Transa
 
     fun bind(transaction: ListTransaction?) {
         binding.apply {
-            cardTextName.text = transaction?.customer?.name
-            cardTextLoan.text = formatRupiah.format(transaction?.loan)
-            cardTextIncome.text = formatRupiah.format(transaction?.income)
-            cardTextOutcome.text = formatRupiah.format(transaction?.outcome)
-            cardTextRatio.text = "${transaction?.creditRatio} %"
-            if (transaction?.employeeCriteria == true) {
+            cardTextName.text = transaction?.transaction?.customer?.name
+            cardTextLoan.text = formatRupiah.format(transaction?.transaction?.loan)
+            cardTextIncome.text = formatRupiah.format(transaction?.transaction?.income)
+            cardTextOutcome.text = formatRupiah.format(transaction?.transaction?.outcome)
+            cardTextRatio.text = "${transaction?.transaction?.creditRatio} %"
+            if (transaction?.transaction?.employeeCriteria == true) {
                 cardTextEmployeeCriteria.text = "Pass"
                 cardTextEmployeeCriteria.setTextColor(Color.parseColor("#00B1B0"))
             } else {
                 cardTextEmployeeCriteria.text = "Not Pass"
                 cardTextEmployeeCriteria.setTextColor(Color.parseColor("#ba0f30"))
             }
-            if (transaction?.financeCriteria == true) {
+            if (transaction?.transaction?.financeCriteria == true) {
                 cardTextFinancialCriteria.text = "Pass"
                 cardTextFinancialCriteria.setTextColor(Color.parseColor("#00B1B0"))
             } else {

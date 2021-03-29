@@ -1,17 +1,17 @@
-package com.andika.project_credit_scoring.entity
+package com.andika.project_credit_scoring.model.history
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Transaction(
+data class ResponseHistory(
 
 	@field:SerializedName("code")
 	val code: Int? = null,
 
 	@field:SerializedName("data")
-	val data: DataTransaction? = null,
+	val data: DataHistory? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -21,7 +21,62 @@ data class Transaction(
 ) : Parcelable
 
 @Parcelize
-data class ListTransaction(
+data class ListHistory(
+
+	@field:SerializedName("approvalDate")
+	val approvalDate: String? = null,
+
+	@field:SerializedName("approval")
+	val approval: ApprovalHistory? = null,
+
+	@field:SerializedName("submitDate")
+	val submitDate: String? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null
+) : Parcelable
+
+@Parcelize
+data class NeedTypeHistory(
+
+	@field:SerializedName("id")
+	val id: String? = null,
+
+	@field:SerializedName("type")
+	val type: String? = null
+) : Parcelable
+
+@Parcelize
+data class ApprovalHistory(
+
+	@field:SerializedName("approve")
+	val approve: Boolean? = null,
+
+	@field:SerializedName("id")
+	val id: String? = null,
+
+	@field:SerializedName("transaction")
+	val transaction: TransactionHistory? = null
+) : Parcelable
+
+@Parcelize
+data class DataHistory(
+
+	@field:SerializedName("total")
+	val total: Int? = null,
+
+	@field:SerializedName("size")
+	val size: Int? = null,
+
+	@field:SerializedName("page")
+	val page: Int? = null,
+
+	@field:SerializedName("list")
+	val list: List<ListHistory?>? = null
+) : Parcelable
+
+@Parcelize
+data class TransactionHistory(
 
 	@field:SerializedName("income")
 	val income: Int? = null,
@@ -39,7 +94,7 @@ data class ListTransaction(
 	val notes: String? = null,
 
 	@field:SerializedName("needType")
-	val needType: String? = null,
+	val needType: NeedTypeHistory? = null,
 
 	@field:SerializedName("tenor")
 	val tenor: Int? = null,
@@ -72,27 +127,11 @@ data class ListTransaction(
 	val creditRatio: Double? = null,
 
 	@field:SerializedName("customer")
-	val customer: CustomerTransaction? = null
+	val customer: CustomerHistory? = null
 ) : Parcelable
 
 @Parcelize
-data class DataTransaction(
-
-	@field:SerializedName("total")
-	val total: Int? = null,
-
-	@field:SerializedName("size")
-	val size: Int? = null,
-
-	@field:SerializedName("page")
-	val page: Int? = null,
-
-	@field:SerializedName("list")
-	val list: List<ListTransaction?>? = null
-) : Parcelable
-
-@Parcelize
-data class CustomerTransaction(
+data class CustomerHistory(
 
 	@field:SerializedName("submitter")
 	val submitter: String? = null,

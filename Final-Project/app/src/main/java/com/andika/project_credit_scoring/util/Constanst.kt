@@ -12,8 +12,13 @@ object Constanst {
     // SHARED PREFERENCES TAG
     val TOKEN = "TOKEN"
     val USERNAME = "USERNAME"
+    val URL = "URL"
     val ROLE = "ROLE"
     val FULLNAME = "FULLNAME"
+
+    val MASTER = "MASTER"
+    val SUPERVISOR = "SUPERVISOR"
+    val STAFF = "STAFF"
 
     val VALIDATION_EMAIL = "VALIDATION_EMAIL"
     val VALIDATION_PASSWORD = "VALIDATION_EMAIL"

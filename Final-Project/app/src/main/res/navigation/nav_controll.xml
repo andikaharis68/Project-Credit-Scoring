@@ -36,8 +36,8 @@
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" >
         <action
-            android:id="@+id/action_accountFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_accountFragment_to_homeMasterFragment"
+            app:destination="@id/homeMasterFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -67,4 +67,47 @@
     <action
         android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment" />
+    <fragment
+        android:id="@+id/homeMasterFragment"
+        android:name="com.andika.project_credit_scoring.presentation.home.HomeMasterFragment"
+        android:label="fragment_home_master"
+        tools:layout="@layout/fragment_home_master" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.andika.project_credit_scoring.presentation.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_homeMasterFragment"
+        app:destination="@id/homeMasterFragment" />
+    <fragment
+        android:id="@+id/rolesFragment"
+        android:name="com.andika.project_credit_scoring.presentation.roles.RolesFragment"
+        android:label="RolesFragment" >
+        <action
+            android:id="@+id/action_rolesFragment_to_homeMasterFragment"
+            app:destination="@id/homeMasterFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_rolesFragment"
+        app:destination="@id/rolesFragment" />
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment" />
+    <fragment
+        android:id="@+id/listRoleFragment"
+        android:name="com.andika.project_credit_scoring.presentation.roles.ListRoleFragment"
+        android:label="fragment_list_role"
+        tools:layout="@layout/fragment_list_role" >
+        <action
+            android:id="@+id/action_listRoleFragment_to_homeMasterFragment"
+            app:destination="@id/homeMasterFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_listRoleFragment"
+        app:destination="@id/listRoleFragment" />
 </navigation>

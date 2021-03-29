@@ -2,11 +2,10 @@ package com.andika.project_credit_scoring.presentation.account
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.andika.project_credit_scoring.entity.Account
+
 import com.andika.project_credit_scoring.di.qualifier.ServiceAccount
-import com.andika.project_credit_scoring.entity.ListAccount
-import com.andika.project_credit_scoring.entity.ListHistory
-import com.andika.project_credit_scoring.entity.RequestAccount
+import com.andika.project_credit_scoring.model.account.RequestAddAccount
+import com.andika.project_credit_scoring.model.account.ResponseAccount
 import com.andika.project_credit_scoring.repositories.AccountRepository
 import com.andika.project_credit_scoring.util.ResourceState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,30 +18,73 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(@ServiceAccount val repository: AccountRepository) :
     ViewModel(), AccountClickListener {
-    private var _accountLiveData = MutableLiveData<ResourceState>()
-    private var _deleteLiveData = MutableLiveData<String?>()
 
-    val activateAccountLiveData: LiveData<ResourceState>
-        get() {
-            return _accountLiveData
-        }
+    private var _deleteLiveData = MutableLiveData<String?>()
 
     val deleteLiveData: MutableLiveData<String?>
         get() {
             return _deleteLiveData
         }
 
+
     fun getALlAccount() =
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             withTimeout(5000) {
-                var response: Account? = null
+                var response: ResponseAccount? = null
                 try {
                     response = repository.getAllAccount()
                     Log.d("RESPONSE", "$response")
                 } catch (e: Exception) {
                     Log.d("ERROR", "$e")
                     response =
-                        Account(
+                        ResponseAccount(
+                            code = 100,
+                            data = null,
+                            message = "Failed connect to server",
+                        )
+                } finally {
+                    emit(response)
+                }
+            }
+        }
+
+    fun addAccount(requestAccount: RequestAddAccount) =
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            withTimeout(5000) {
+                var response: ResponseAccount? = null
+                Log.d("REQUEST ADD ACCOUNT", "$requestAccount")
+                try {
+                    response = repository.addAccount(requestAccount)
+
+                } catch (e: Exception) {
+                    Log.d("ERROR", "$e")
+                    response =
+                        ResponseAccount(
+                            code = 100,
+                            data = null,
+                            message = "Failed connect to server",
+                        )
+                } finally {
+                    emit(response)
+                }
+            }
+        }
+
+    override fun onDelete(id: String) {
+        deleteLiveData.postValue(id)
+    }
+
+    fun deleteAccount(id : String) =
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
+            withTimeout(5000) {
+                var response: ResponseAccount? = null
+                try {
+                    response = repository.deleteAccount(id)
+                    Log.d("RESPONSE", "$response")
+                } catch (e: Exception) {
+                    Log.d("ERROR", "$e")
+                    response =
+                        ResponseAccount(
                             code = 400,
                             data = null,
                             message = "Email or Password invalid!",
@@ -52,27 +94,6 @@ class AccountViewModel @Inject constructor(@ServiceAccount val repository: Accou
                 }
             }
         }
-
-    fun addAccount(requestAccount: RequestAccount) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = repository.addAccount(requestAccount)
-            if(response.isSuccessful) {
-                _accountLiveData.postValue(ResourceState.success(response.body()))
-            } else {
-                _accountLiveData.postValue(ResourceState.fail("error"))
-            }
-        }
-    }
-
-    override fun onDelete(id: String) {
-        deleteLiveData.postValue(id)
-    }
-
-    fun deleteAccount(id : String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.deleteAccount(id)
-        }
-    }
 
 //    fun checkValidation(
 //        name: String,

@@ -1,14 +1,14 @@
-package com.andika.project_credit_scoring.entity
+package com.andika.project_credit_scoring.model.account
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class RequestAccount(
+data class RequestAddAccount(
 
-	@field:SerializedName("password")
-	val password: String? = null,
+	@field:SerializedName("profilePicture")
+	val profilePicture: String? = null,
 
 	@field:SerializedName("fullName")
 	val fullName: String? = null,
@@ -21,4 +21,5 @@ data class RequestAccount(
 
 	@field:SerializedName("role")
 	val role: String? = null
+
 ) : Parcelable

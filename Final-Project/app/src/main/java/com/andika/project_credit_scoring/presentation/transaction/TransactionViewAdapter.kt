@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andika.project_credit_scoring.R
-import com.andika.project_credit_scoring.entity.ListHistory
-import com.andika.project_credit_scoring.entity.ListTransaction
-import com.andika.project_credit_scoring.presentation.history.HistoryClickListener
-import com.andika.project_credit_scoring.presentation.history.HistoryViewHolder
+import com.andika.project_credit_scoring.model.transaction.ListTransaction
 
 class TransactionViewAdapter(private val transactionClickListener: TransactionClickListener) : RecyclerView.Adapter<TransactionViewHolder>() {
 
