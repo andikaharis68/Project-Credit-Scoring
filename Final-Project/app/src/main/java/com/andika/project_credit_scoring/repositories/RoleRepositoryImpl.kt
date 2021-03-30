@@ -11,6 +11,10 @@ class RoleRepositoryImpl @Inject constructor(private val roleApi: RoleApi) : Rol
         return roleApi.getRole()
     }
 
+    override suspend fun deleteRole(id: String): ResponseRole {
+        return roleApi.deleteRole(id)
+    }
+
     override suspend fun addRole(requestRole: RequestRole): ResponseRole {
         return roleApi.addRole(requestRole)
     }

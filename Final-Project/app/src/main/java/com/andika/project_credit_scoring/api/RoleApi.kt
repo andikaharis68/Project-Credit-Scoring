@@ -2,9 +2,7 @@ package com.andika.project_credit_scoring.api
 
 import com.andika.project_credit_scoring.model.roles.RequestRole
 import com.andika.project_credit_scoring.model.roles.ResponseRole
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface RoleApi {
 
@@ -13,4 +11,8 @@ interface RoleApi {
 
     @POST("role")
     suspend fun addRole(@Body requestRole: RequestRole) : ResponseRole
+
+    @DELETE("role/{id}")
+    suspend fun deleteRole(@Path("id") id : String) : ResponseRole
+
 }

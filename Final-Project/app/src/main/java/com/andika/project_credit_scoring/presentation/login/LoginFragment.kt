@@ -78,14 +78,12 @@ class LoginFragment : Fragment() {
         viewModel.getValidation().observe(this) { itValid ->
             loadingDialog.show()
             binding.apply {
-                if (!itValid.password && itValid.username) {
-                    findNavController().navigate(R.id.action_global_homeMasterFragment)
-                    sharedViewModel.hideBottomVav(true)
+                if (itValid.password && itValid.username) {
                     viewModel.postLogin(requestLoginValue).observe(requireActivity()) {
                         when (it?.code) {
                             200 -> {
                                 loadingDialog.hide()
-                                if (it?.data?.roles == MASTER ) {
+                                if (it?.data?.master!!) {
                                     sharedPref.edit()
                                         .putString(TOKEN, "${it.data?.token}")
                                         .putString(FULLNAME, "${it.data?.fullName}")
@@ -93,7 +91,7 @@ class LoginFragment : Fragment() {
                                         .apply()
                                     findNavController().navigate(R.id.action_global_homeMasterFragment)
                                     sharedViewModel.hideBottomVav(true)
-                                } else {
+                                } else if (it.data?.readAllTransaction!! || it.data?.approveTransaction!! || it.data?.readAllReport!!){
                                     sharedPref.edit()
                                         .putString(TOKEN, "${it.data?.token}")
                                         .putString(FULLNAME, "${it.data?.fullName}")
@@ -104,6 +102,13 @@ class LoginFragment : Fragment() {
                                         .apply()
                                     findNavController().navigate(R.id.action_global_homeFragment)
                                     sharedViewModel.hideBottomVav(true)
+                                } else {
+                                    loadingDialog.hide()
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "You don't have any access in this application",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }
                             100 -> {

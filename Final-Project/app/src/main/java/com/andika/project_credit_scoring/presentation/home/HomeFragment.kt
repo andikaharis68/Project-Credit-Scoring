@@ -66,6 +66,24 @@ class HomeFragment : Fragment() {
             textInfoUser.text = user
             textInfoRupiah.text = formatRupiah.format(1200000)
             textInfoRole.text = "You're access as a $role"
+            if (approvalTransaction == "true" || readTransaction == "true"){
+                homeBtnTransaction.setBackgroundResource(R.drawable.round_corner_white)
+                homeBtnTransaction.setOnClickListener {
+                    findNavController().navigate(R.id.action_global_transactionFragment)
+                    sharedViewModel.hideBottomVav(false)
+                }
+            } else {
+                homeBtnTransaction.setBackgroundResource(R.drawable.round_corner_grey2)
+            }
+            if (readReport == "true") {
+                homeBtnReport.setBackgroundResource(R.drawable.round_corner_white)
+                homeBtnReport.setOnClickListener {
+                    findNavController().navigate(R.id.action_global_historyFragment)
+                    sharedViewModel.hideBottomVav(false)
+                }
+            } else {
+                homeBtnReport.setBackgroundResource(R.drawable.round_corner_grey2)
+            }
             highlightMenu.setOnClickListener {
                 val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_home, null)
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
@@ -75,14 +93,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_global_profileFragment)
                 sharedViewModel.hideBottomVav(true)
             }
-            homeBtnTransaction.setOnClickListener {
-                findNavController().navigate(R.id.action_global_transactionFragment)
-                sharedViewModel.hideBottomVav(false)
-            }
-            homeBtnReport.setOnClickListener {
-                findNavController().navigate(R.id.action_global_historyFragment)
-                sharedViewModel.hideBottomVav(false)
-            }
+
             homeBtnLogout.setOnClickListener {
                 val dialogView = LayoutInflater.from(requireContext()).inflate(
                     R.layout.alert_logout,

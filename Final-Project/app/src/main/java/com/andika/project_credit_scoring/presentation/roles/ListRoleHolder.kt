@@ -47,6 +47,10 @@ class ListRoleHolder(view: View, private val roleListClickListener: RoleListClic
             } else {
                 checkReadReportTransaction.visibility  = View.GONE
             }
+
+            cardBtnRoleDelete.setOnClickListener {
+                roleListClickListener.onDelete(role?.id!!)
+            }
         }
     }
 }

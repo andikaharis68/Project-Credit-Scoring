@@ -116,12 +116,6 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     alertDialog.dismiss()
                 }
 
-//                val adapter = ArrayAdapter.createFromResource(
-//                    requireContext(),
-//                    R.array.role,
-//                    android.R.layout.simple_spinner_dropdown_item
-//                )
-
                 val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                     requireContext(),
                     android.R.layout.simple_spinner_dropdown_item, roles

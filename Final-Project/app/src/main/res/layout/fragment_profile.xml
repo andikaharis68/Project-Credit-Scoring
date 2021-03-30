@@ -154,6 +154,7 @@
                     android:textColor="@color/dark_blue"/>
 
                 <TextView
+                    android:id="@+id/profile_text_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -183,6 +184,7 @@
                     android:textColor="@color/dark_blue"/>
 
                 <TextView
+                    android:id="@+id/profile_text_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -213,6 +215,7 @@
                     android:textColor="@color/dark_blue"/>
 
                 <TextView
+                    android:id="@+id/profile_text_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -243,6 +246,7 @@
                     android:textColor="@color/dark_blue"/>
 
                 <TextView
+                    android:id="@+id/profile_text_role"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

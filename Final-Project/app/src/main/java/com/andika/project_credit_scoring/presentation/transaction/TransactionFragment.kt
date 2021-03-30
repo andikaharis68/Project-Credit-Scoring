@@ -1,6 +1,7 @@
 package com.andika.project_credit_scoring.presentation.transaction
 
 import android.app.AlertDialog
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_approval_transaction.view.*
 import java.text.NumberFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.log
 
 @AndroidEntryPoint
@@ -35,12 +37,17 @@ class TransactionFragment : Fragment() {
     lateinit var requestApproveValue: RequestApproval
     val localeID = Locale("in", "ID")
     val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
+    var approvalTransaction = ""
+
+    @Inject
+    lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentTransactionBinding.inflate(layoutInflater)
         initViewModel()
         subscribe()
+        approvalTransaction = sharedPref.getString(Constanst.APPROVAL_TRANSACTION, "")!!
     }
 
     override fun onCreateView(
@@ -56,7 +63,7 @@ class TransactionFragment : Fragment() {
             }
             viewModel.getALlTransaction().observe(requireActivity()) {
                 it?.data?.list?.apply {
-                    rvAdapter.setData(this)
+                    rvAdapter.setData(this, approvalTransaction)
                 }
             }
             refreshTransaction.setOnRefreshListener {

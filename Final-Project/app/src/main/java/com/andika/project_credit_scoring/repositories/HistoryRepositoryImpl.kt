@@ -8,7 +8,6 @@ import javax.inject.Inject
 class HistoryRepositoryImpl @Inject constructor(private val historyApi: HistoryApi): HistoryRepository{
     override suspend fun getAllHistory() : ResponseHistory {
         return historyApi.getReport()
-        Log.d("DATA", "${historyApi.getReport()}")
     }
 
     override suspend fun getRejectedHistory(): ResponseHistory {
@@ -17,6 +16,7 @@ class HistoryRepositoryImpl @Inject constructor(private val historyApi: HistoryA
 
     override suspend fun getApprovedHistory(): ResponseHistory {
         return historyApi.getApprovedReport()
+        Log.d("DATA APPROVED", "${historyApi.getApprovedReport()}")
     }
 
 }

@@ -7,5 +7,6 @@ import com.andika.project_credit_scoring.model.roles.ResponseRole
 
 interface RoleRepository {
     suspend fun getRole(): ResponseRole
+    suspend fun deleteRole(id : String): ResponseRole
     suspend fun addRole(requestRole: RequestRole): ResponseRole
 }

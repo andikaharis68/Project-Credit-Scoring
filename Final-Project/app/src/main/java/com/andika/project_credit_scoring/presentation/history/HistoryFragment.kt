@@ -51,7 +51,7 @@ class HistoryFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter
             }
-            getAllHistory()
+            getApprovedHistory()
 
             btnBack.setOnClickListener{
                 findNavController().navigate(R.id.action_historyFragment_to_homeFragment)
@@ -179,6 +179,7 @@ class HistoryFragment : Fragment() {
                     loadingDialog.hide()
                     it?.data?.list?.apply {
                         rvAdapter.setData(this)
+                        Log.d("APPROVED", "$this")
                     }
                 }
                 100 -> {

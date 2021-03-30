@@ -11,15 +11,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentProfileBinding
+import com.andika.project_credit_scoring.login.RequestLogin
+import com.andika.project_credit_scoring.model.transaction.RequestApproval
+import com.andika.project_credit_scoring.model.user.RequestPassword
+import com.andika.project_credit_scoring.model.user.RequestUser
+import com.andika.project_credit_scoring.presentation.login.LoginViewModel
 import com.bumptech.glide.Glide
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.dialog_edit_password.view.*
 import kotlinx.android.synthetic.main.dialog_edit_profile.*
 import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -28,11 +38,15 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 class ProfileFragment : Fragment() {
 
     lateinit var binding: FragmentProfileBinding
+    lateinit var viewModel: ProfileViewModel
     private var selectedImage: Uri? = null
+    lateinit var requestUser: RequestUser
+    lateinit var requestPassword: RequestPassword
     var uri = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initViewModel()
         binding = FragmentProfileBinding.inflate(layoutInflater)
     }
 
@@ -41,31 +55,75 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding.apply {
+
+            viewModel.getUser().observe(requireActivity()) {
+                Glide.with(requireActivity()).load(it?.data?.profilePicture).into(profile_picture)
+                profileTextName.text = it?.data?.fullName
+                profileTextUsername.text = it?.data?.username
+                profileTextEmail.text = it?.data?.email
+                profileTextRole.text = it?.data?.role
+            }
+
+            profileBtnBack.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+            }
+
             profileEditImage.setOnClickListener {
                 loadImagefromGallery(it)
             }
+
             profileEditBtn.setOnClickListener {
                 val dialogView = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_edit_profile, null)
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
                 val alertDialog = dialogBuilder.show()
                 dialogView.apply {
+                    viewModel.getUser().observe(requireActivity()) {
+                        dialog_edit_text_name.setText(it?.data?.fullName,TextView.BufferType.EDITABLE)
+                        dialog_edit_text_username.setText(it?.data?.username,TextView.BufferType.EDITABLE)
+                        dialog_edit_text_email.setText(it?.data?.email,TextView.BufferType.EDITABLE)
+                    }
                     dialog_edit_btn_cancel.setOnClickListener {
+                        alertDialog.hide()
+                    }
+                    dialog_edit_btn_save.setOnClickListener {
+                        requestUser = RequestUser(
+                            username = dialog_edit_text_username.text.toString(),
+                            fullName =  dialog_edit_text_name.text.toString(),
+                            email = dialog_edit_text_email.text.toString(),
+                            profilePicture = uri
+                        )
+                        editUser(requestUser)
                         alertDialog.hide()
                     }
                 }
             }
+
             profileChangePassword.setOnClickListener {
                 val dialogViewPassword = LayoutInflater.from(requireContext())
                     .inflate(R.layout.dialog_edit_password, null)
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogViewPassword)
                 val alertDialog = dialogBuilder.show()
                 dialogViewPassword.apply {
-
+                    dialog_password_btn_cancel.setOnClickListener {
+                        alertDialog.hide()
+                    }
+                    dialog_password_btn_save.setOnClickListener {
+                        requestPassword = RequestPassword(
+                            oldPassword = dialog_password_text_old.text.toString(),
+                            password = dialog_password_text_new.text.toString()
+                        )
+                        editPassword(requestPassword)
+                        alertDialog.hide()
+                    }
                 }
             }
             return binding.root
         }
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
     }
 
 
@@ -86,9 +144,7 @@ class ProfileFragment : Fragment() {
             if (requestCode == RESULT_LOAD_IMG && resultCode == Activity.RESULT_OK && null != data) {
                 // dapatkan gambar dari data intent
                 selectedImage = data.data!!
-
                 uploadToCloudinary(getPath(selectedImage)!!)
-
             } else {
                 Toast.makeText(
                     requireContext(), "Anda belum mengambil gambar",
@@ -112,13 +168,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun uploadToCloudinary(filepath: String) {
-        Log.d("masuk", "masuk")
         MediaManager.get().upload(filepath).unsigned("ve2u0qv8").callback(object : UploadCallback {
             override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
                 Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show()
-                Log.d("URL", "${resultData?.get("url")}")
                 uri = resultData?.get("url").toString()
-                Glide.with(requireActivity()).load(uri).into(profile_picture);
+                Glide.with(requireActivity()).load(uri).into(profile_picture)
             }
 
             override fun onProgress(requestId: String?, bytes: Long, totalBytes: Long) {
@@ -145,6 +199,61 @@ class ProfileFragment : Fragment() {
         }).dispatch()
     }
 
+    fun editUser(requestUser: RequestUser) =
+        viewModel.editUser(requestUser).observe(requireActivity()){
+            when (it?.code) {
+                200 -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "success edit user",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+                }
+                100 -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+    fun editPassword(requestPassword: RequestPassword) =
+        viewModel.editPassword(requestPassword).observe(requireActivity()){
+            when (it?.code) {
+                200 -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "success edit password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+                }
+                100 -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
 
     companion object {
         private const val RESULT_LOAD_IMG = 1
