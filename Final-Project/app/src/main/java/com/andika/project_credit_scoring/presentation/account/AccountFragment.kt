@@ -1,23 +1,24 @@
 package com.andika.project_credit_scoring.presentation.account
 
 
+import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import android.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentAccountBinding
 import com.andika.project_credit_scoring.model.account.RequestAddAccount
+import com.andika.project_credit_scoring.model.roles.ListRole
 import com.andika.project_credit_scoring.util.component.LoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.alert_delete_account.view.*
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.card_view_account.*
 import kotlinx.android.synthetic.main.dialog_add_account.*
 import kotlinx.android.synthetic.main.dialog_add_account.view.*
 import kotlinx.android.synthetic.main.fragment_account.*
+
 
 @AndroidEntryPoint
 class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -36,6 +38,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
     lateinit var loadingDialog: androidx.appcompat.app.AlertDialog
     private lateinit var accountRequestValue: RequestAddAccount
     private var role: String = "STAFF"
+    var roles = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +46,8 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
         loadingDialog = LoadingDialog.build(requireContext())
         initViewModel()
         subscribe()
-        viewModel.getALlAccount()
+        getAllAccount()
+        getRole()
     }
 
     override fun onCreateView(
@@ -57,14 +61,13 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter
             }
-            getAllAccount()
 
             btnBack.setOnClickListener {
                 findNavController().navigate(R.id.action_accountFragment_to_homeMasterFragment)
             }
 
             textVerified.setOnClickListener {
-                viewModel.getALlAccount()
+                getAllAccountVerified()
                 textVerified.setBackgroundResource(R.drawable.red_roundshape)
                 textNotVerified.setBackgroundResource(R.drawable.white_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
@@ -73,7 +76,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 textNotVerified.setTextColor(Color.parseColor("#000000"))
             }
             textNotVerified.setOnClickListener {
-                viewModel.getALlAccount()
+                getAllAccountNotVerified()
                 textNotVerified.setBackgroundResource(R.drawable.red_roundshape)
                 textVerified.setBackgroundResource(R.drawable.white_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
@@ -82,7 +85,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 textNotVerified.setTextColor(Color.parseColor("#ffffff"))
             }
             textAll.setOnClickListener {
-                viewModel.getALlAccount()
+                getAllAccount()
                 textAll.setBackgroundResource(R.drawable.red_roundshape)
                 textNotVerified.setBackgroundResource(R.drawable.white_roundshape)
                 textVerified.setBackgroundResource(R.drawable.white_roundshape)
@@ -92,7 +95,10 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
             btnAddAccount.setOnClickListener {
-                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_account, null)
+                val dialogView = LayoutInflater.from(requireContext()).inflate(
+                    R.layout.dialog_add_account,
+                    null
+                )
                 val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
                 val alertDialog = dialogBuilder.show()
                 dialogView.dialog_btn_create.setOnClickListener {
@@ -110,11 +116,17 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     alertDialog.dismiss()
                 }
 
-                val adapter = ArrayAdapter.createFromResource(
+//                val adapter = ArrayAdapter.createFromResource(
+//                    requireContext(),
+//                    R.array.role,
+//                    android.R.layout.simple_spinner_dropdown_item
+//                )
+
+                val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                     requireContext(),
-                    R.array.role,
-                    android.R.layout.simple_spinner_dropdown_item
+                    android.R.layout.simple_spinner_dropdown_item, roles
                 )
+
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 dialogView.spinner_role.adapter = adapter
@@ -130,7 +142,10 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun subscribe() {
         viewModel.deleteLiveData.observe(this) { id ->
-            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.alert_delete_account, null)
+            val dialogView = LayoutInflater.from(requireContext()).inflate(
+                R.layout.alert_delete_account,
+                null
+            )
             val dialogBuilder = AlertDialog.Builder(requireContext()).setView(dialogView)
             val alertDialog = dialogBuilder.show()
             dialogView.alert_btn_cancel_delete.setOnClickListener {
@@ -146,6 +161,48 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun getAllAccount() =
         viewModel.getALlAccount().observe(requireActivity()) {
+            loadingDialog.show()
+            when (it?.code) {
+                200 -> {
+                    loadingDialog.hide()
+                    it?.data?.list?.apply {
+                        Log.d("THIS", "$this")
+                        rvAdapter.setData(this)
+                    }
+                }
+                else -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    private fun getAllAccountVerified() =
+        viewModel.getALlAccountVerified().observe(requireActivity()) {
+            loadingDialog.show()
+            when (it?.code) {
+                200 -> {
+                    loadingDialog.hide()
+                    it?.data?.list?.apply {
+                        Log.d("THIS", "$this")
+                        rvAdapter.setData(this)
+                    }
+                }
+                else -> {
+                    loadingDialog.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    private fun getAllAccountNotVerified() =
+        viewModel.getALlAccountNotVerified().observe(requireActivity()) {
             loadingDialog.show()
             when (it?.code) {
                 200 -> {
@@ -212,6 +269,26 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                }
+            }
+        }
+
+    private fun getRole() =
+        viewModel.getRole().observe(requireActivity()) {
+            when (it?.code) {
+                200 -> {
+                    it?.data?.list?.apply {
+                        for(i in this){
+                            roles.add(i?.name!!)
+                        }
+                    }
+                }
+                else -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "${it?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

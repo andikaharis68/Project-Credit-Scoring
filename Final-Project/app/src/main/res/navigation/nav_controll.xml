@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_rolesFragment_to_homeMasterFragment"
             app:destination="@id/homeMasterFragment" />
+        <action
+            android:id="@+id/action_rolesFragment_to_listRoleFragment"
+            app:destination="@id/listRoleFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_rolesFragment"

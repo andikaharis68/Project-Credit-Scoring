@@ -16,8 +16,15 @@ import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentLoginBinding
 import com.andika.project_credit_scoring.login.RequestLogin
+import com.andika.project_credit_scoring.util.Constanst.APPROVAL_TRANSACTION
 import com.andika.project_credit_scoring.util.Constanst.FULLNAME
+import com.andika.project_credit_scoring.util.Constanst.INPUT_CUSTOMER
+import com.andika.project_credit_scoring.util.Constanst.INPUT_TRANSACTION
 import com.andika.project_credit_scoring.util.Constanst.MASTER
+import com.andika.project_credit_scoring.util.Constanst.READ_ALL_CUSTOMER
+import com.andika.project_credit_scoring.util.Constanst.READ_ALL_REPORT
+import com.andika.project_credit_scoring.util.Constanst.READ_ALL_TRANSACTION
+import com.andika.project_credit_scoring.util.Constanst.READ_REPORT_BY_TRANSACTION
 import com.andika.project_credit_scoring.util.Constanst.ROLE
 import com.andika.project_credit_scoring.util.Constanst.SUPERVISOR
 import com.andika.project_credit_scoring.util.Constanst.USERNAME
@@ -71,7 +78,9 @@ class LoginFragment : Fragment() {
         viewModel.getValidation().observe(this) { itValid ->
             loadingDialog.show()
             binding.apply {
-                if (itValid.password && itValid.username) {
+                if (!itValid.password && itValid.username) {
+                    findNavController().navigate(R.id.action_global_homeMasterFragment)
+                    sharedViewModel.hideBottomVav(true)
                     viewModel.postLogin(requestLoginValue).observe(requireActivity()) {
                         when (it?.code) {
                             200 -> {
@@ -84,20 +93,17 @@ class LoginFragment : Fragment() {
                                         .apply()
                                     findNavController().navigate(R.id.action_global_homeMasterFragment)
                                     sharedViewModel.hideBottomVav(true)
-                                } else if(it?.data?.roles == SUPERVISOR) {
+                                } else {
                                     sharedPref.edit()
                                         .putString(TOKEN, "${it.data?.token}")
                                         .putString(FULLNAME, "${it.data?.fullName}")
                                         .putString(ROLE, "${it.data?.roles}")
+                                        .putString(READ_ALL_TRANSACTION, "${it.data?.readAllTransaction}")
+                                        .putString(APPROVAL_TRANSACTION, "${it.data?.approveTransaction}")
+                                        .putString(READ_ALL_REPORT, "${it.data?.readAllReport}")
                                         .apply()
                                     findNavController().navigate(R.id.action_global_homeFragment)
                                     sharedViewModel.hideBottomVav(true)
-                                } else {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "You must login as a supervisor",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
                                 }
                             }
                             100 -> {

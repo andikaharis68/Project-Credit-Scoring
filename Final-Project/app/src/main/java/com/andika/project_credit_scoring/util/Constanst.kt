@@ -1,29 +1,31 @@
 package com.andika.project_credit_scoring.util
 
 object Constanst {
-    val MENU_HOME = "Home"
-    val MENU_TRANSACTION = "Transaction"
-    val MENU_HISTORY = "History"
-    val MENU_ACCOUNT = "Account"
+    const val MENU_HOME = "Home"
+    const val MENU_TRANSACTION = "Transaction"
+    const val MENU_HISTORY = "History"
+    const val MENU_ACCOUNT = "Account"
 
     // URL
-    val BASE_URL = "http://10.10.14.250:8085/"
+    const val BASE_URL = "http://10.10.14.250:8085/"
 
     // SHARED PREFERENCES TAG
-    val TOKEN = "TOKEN"
-    val USERNAME = "USERNAME"
-    val URL = "URL"
-    val ROLE = "ROLE"
-    val FULLNAME = "FULLNAME"
+    const val TOKEN = "TOKEN"
+    const val USERNAME = "USERNAME"
+    const val URL = "URL"
+    const val ROLE = "ROLE"
+    const val FULLNAME = "FULLNAME"
 
-    val MASTER = "MASTER"
-    val SUPERVISOR = "SUPERVISOR"
-    val STAFF = "STAFF"
+    const val MASTER = "MASTER"
+    const val SUPERVISOR = "SUPERVISOR"
+    const val STAFF = "STAFF"
 
-    val VALIDATION_EMAIL = "VALIDATION_EMAIL"
-    val VALIDATION_PASSWORD = "VALIDATION_EMAIL"
-    val VALIDATION_CONFIRM_PASSWORD = "VALIDATION_CONFIRM_PASSWORD"
-    val VALIDATION_USERNAME = "VALIDATION_USERNAME"
-    val VALIDATION_SUCCESS = "VALIDATION_SUCCESS"
+    const val INPUT_CUSTOMER = "INPUT_CUSTOMER"
+    const val READ_ALL_CUSTOMER = "READ_ALL_CUSTOMER"
+    const val INPUT_TRANSACTION = "INPUT_TRANSACTION"
+    const val READ_ALL_TRANSACTION = "READ_ALL_TRANSACTION"
+    const val APPROVAL_TRANSACTION = "APPROVAL_TRANSACTION"
+    const val READ_ALL_REPORT = "READ_ALL_REPORT"
+    const val READ_REPORT_BY_TRANSACTION = "READ_REPORT_BY_TRANSACTION"
 
 }

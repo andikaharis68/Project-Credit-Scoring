@@ -93,7 +93,7 @@
                     android:textColor="#3d2582"
                     android:layout_marginLeft="5dp"
                     android:lineSpacingExtra="2sp"
-                    android:text="2345 total transaction"
+                    android:text="25 total role"
                     />
             </LinearLayout>
 

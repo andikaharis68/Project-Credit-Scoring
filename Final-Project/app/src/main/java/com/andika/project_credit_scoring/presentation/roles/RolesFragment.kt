@@ -150,6 +150,7 @@ class RolesFragment : Fragment() {
                         "Successful",
                         Toast.LENGTH_SHORT
                     ).show()
+                    findNavController().navigate(R.id.action_rolesFragment_to_listRoleFragment)
                 }
                 100 -> {
                     loadingDialog.hide()

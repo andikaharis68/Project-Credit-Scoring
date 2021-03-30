@@ -3,6 +3,7 @@ package com.andika.project_credit_scoring.presentation.home
 import android.app.AlertDialog
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,10 @@ import androidx.navigation.fragment.findNavController
 import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentHomeBinding
+import com.andika.project_credit_scoring.util.Constanst.APPROVAL_TRANSACTION
 import com.andika.project_credit_scoring.util.Constanst.FULLNAME
+import com.andika.project_credit_scoring.util.Constanst.READ_ALL_REPORT
+import com.andika.project_credit_scoring.util.Constanst.READ_ALL_TRANSACTION
 import com.andika.project_credit_scoring.util.Constanst.ROLE
 import com.andika.project_credit_scoring.util.Constanst.TOKEN
 import com.andika.project_credit_scoring.util.Constanst.USERNAME
@@ -29,6 +33,9 @@ class HomeFragment : Fragment() {
     lateinit var sharedViewModel : MainActivityViewModel
     var user = ""
     var role = ""
+    var readTransaction = ""
+    var approvalTransaction = ""
+    var readReport = ""
     val localeID = Locale("in", "ID")
     val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
@@ -40,6 +47,12 @@ class HomeFragment : Fragment() {
         initViewModel()
         user = sharedPref.getString(FULLNAME, "")!!
         role = sharedPref.getString(ROLE, "")!!
+        readTransaction = sharedPref.getString(READ_ALL_TRANSACTION, "")!!
+        approvalTransaction = sharedPref.getString(APPROVAL_TRANSACTION, "")!!
+        readReport = sharedPref.getString(READ_ALL_REPORT, "")!!
+        if (readTransaction == "true"){
+            Log.d("TRUE", "masuk")
+        }
         binding = FragmentHomeBinding.inflate(layoutInflater)
 
     }
@@ -60,7 +73,7 @@ class HomeFragment : Fragment() {
             }
             homeBtnProfile.setOnClickListener {
                 findNavController().navigate(R.id.action_global_profileFragment)
-                sharedViewModel.hideBottomVav(false)
+                sharedViewModel.hideBottomVav(true)
             }
             homeBtnTransaction.setOnClickListener {
                 findNavController().navigate(R.id.action_global_transactionFragment)

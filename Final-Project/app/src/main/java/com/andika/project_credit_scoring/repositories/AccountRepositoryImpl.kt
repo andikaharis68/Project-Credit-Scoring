@@ -5,6 +5,7 @@ import android.util.Log
 import com.andika.project_credit_scoring.api.AccountApi
 import com.andika.project_credit_scoring.model.account.RequestAddAccount
 import com.andika.project_credit_scoring.model.account.ResponseAccount
+import com.andika.project_credit_scoring.model.roles.ResponseRole
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -15,6 +16,14 @@ class AccountRepositoryImpl @Inject constructor(private val accountApi: AccountA
         Log.d("DATA", "${accountApi.getAccount()}")
     }
 
+    override suspend fun getAllAccountVerified(): ResponseAccount {
+        return accountApi.getAccountVerified()
+    }
+
+    override suspend fun getAllAccountNotVerified(): ResponseAccount {
+        return accountApi.getAccountNotVerified()
+    }
+
     override suspend fun addAccount(requestAccount: RequestAddAccount): ResponseAccount {
         return accountApi.addAccount(requestAccount)
     }
@@ -23,4 +32,7 @@ class AccountRepositoryImpl @Inject constructor(private val accountApi: AccountA
         return accountApi.deleteAccount(id)
     }
 
+    override suspend fun getRole(): ResponseRole {
+        return accountApi.getRole()
+    }
 }

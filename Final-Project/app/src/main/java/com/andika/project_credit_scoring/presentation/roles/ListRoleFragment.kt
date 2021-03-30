@@ -1,6 +1,7 @@
 package com.andika.project_credit_scoring.presentation.roles
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.andika.project_credit_scoring.MainActivityViewModel
 import com.andika.project_credit_scoring.R
 import com.andika.project_credit_scoring.databinding.FragmentListRoleBinding
 import com.andika.project_credit_scoring.databinding.FragmentRolesBinding
+import com.andika.project_credit_scoring.model.roles.ListRole
 import com.andika.project_credit_scoring.presentation.history.HistoryViewAdapter
 import com.andika.project_credit_scoring.presentation.history.HistoryViewModel
 import com.andika.project_credit_scoring.util.component.LoadingDialog
@@ -26,6 +28,7 @@ class ListRoleFragment : Fragment() {
     lateinit var viewModel : RoleViewModel
     lateinit var loadingDialog: androidx.appcompat.app.AlertDialog
     lateinit var rvAdapter: ListRoleAdapter
+    var roleList = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,7 @@ class ListRoleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("roleList", "$roleList")
         binding.apply {
             loadingDialog = LoadingDialog.build(requireContext())
             rvAdapter = ListRoleAdapter(viewModel)
@@ -84,5 +88,4 @@ class ListRoleFragment : Fragment() {
                 }
             }
         }
-
 }
