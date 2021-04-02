@@ -3,6 +3,7 @@ package com.andika.project_credit_scoring.repositories
 import android.util.Log
 import com.andika.project_credit_scoring.api.HistoryApi
 import com.andika.project_credit_scoring.model.history.ResponseHistory
+import com.andika.project_credit_scoring.model.history.ResponseTotal
 import javax.inject.Inject
 
 class HistoryRepositoryImpl @Inject constructor(private val historyApi: HistoryApi): HistoryRepository{
@@ -16,7 +17,10 @@ class HistoryRepositoryImpl @Inject constructor(private val historyApi: HistoryA
 
     override suspend fun getApprovedHistory(): ResponseHistory {
         return historyApi.getApprovedReport()
-        Log.d("DATA APPROVED", "${historyApi.getApprovedReport()}")
+    }
+
+    override suspend fun getTotal(): ResponseTotal {
+        return historyApi.getTotal()
     }
 
 }

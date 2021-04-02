@@ -546,14 +546,14 @@
                         android:layout_marginLeft="5dp"/>
 
                     <TextView
-                        android:id="@+id/dialog_text_submiter"
+                        android:id="@+id/dialog_history_text_submitter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:text="Andika Haris"
                         android:textColor="@color/dark_blue"
                         android:fontFamily="@font/poppins_med"
-                        android:textSize="15sp"/>
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
             </LinearLayout>

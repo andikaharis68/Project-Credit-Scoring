@@ -54,18 +54,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27.3dp"
-                        android:text="Username"/>
+                        android:text="Input Username"/>
 
-                    <EditText
-                        android:id="@+id/usernameInputText"
-                        android:layout_width="263dp"
-                        android:layout_height="35dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/round_corner_white"
-                        android:maxLines="1"
-                        android:paddingHorizontal="15dp"
-                        android:textColorHint="#c2c2c2"
-                     />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/usernameInputText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="15dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/round_corner_white"
+                            android:ems="10"
+                            android:hint="Username" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -78,34 +84,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="22dp"
-                        android:text="Password" />
+                        android:text="Input Password" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="17.3dp"
-                        android:layout_marginTop="12dp"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/passwordInputText"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/username_text_input_layout"
+                            app:passwordToggleEnabled="true"
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
-                            android:background="@drawable/round_corner_white"
-                            android:inputType="textPassword"
-                            android:paddingHorizontal="15dp"
-                            android:textColor="#333232"/>
+                            android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center_horizontal"
-                            android:layout_marginRight="5dp"
-                            android:text="*"
-                            android:textColor="#38b5f2"
-                            android:textSize="13.3sp" />
+                            <EditText
+                                android:id="@+id/passwordInputText"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:background="@drawable/round_corner_white"
+                                android:layout_centerVertical="true"
+                                android:ems="10"
+                                android:inputType="textPassword"
+                                android:hint="Password" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
                     </RelativeLayout>
 
                     <View
@@ -154,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Buy Now?"
+                android:text="Buy Now,"
                 android:textSize="13.3sp" />
 
             <TextView

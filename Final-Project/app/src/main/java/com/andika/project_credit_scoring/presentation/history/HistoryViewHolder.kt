@@ -15,10 +15,10 @@ class HistoryViewHolder(view: View, private val historyClickListener: HistoryCli
     val localeID = Locale("in", "ID")
     val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
 
-    fun bind(history: ListHistory?) {
+    fun bindAll(history: ListHistory?) {
         binding.apply {
             cardTextName.text = history?.approval?.transaction?.customer?.name
-//            cardTextPrice1.text = formatRupiah.format(history?.approval?.transaction?.loan.toString())
+            cardTextPrice1.text = formatRupiah.format(history?.approval?.transaction?.loan)
             cardTextKreditRatio.text = "${history?.approval?.transaction?.creditRatio} %"
             cardTextDate.text = history?.approvalDate
             cardTextStaff.text = history?.approval?.transaction?.submitter

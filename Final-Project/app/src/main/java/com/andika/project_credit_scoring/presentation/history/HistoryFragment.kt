@@ -38,6 +38,7 @@ class HistoryFragment : Fragment() {
         binding = FragmentHistoryBinding.inflate(layoutInflater)
         initViewModel()
         subscribe()
+        getAllHistory()
     }
 
     override fun onCreateView(
@@ -51,15 +52,13 @@ class HistoryFragment : Fragment() {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = rvAdapter
             }
-            getApprovedHistory()
 
             btnBack.setOnClickListener{
                 findNavController().navigate(R.id.action_historyFragment_to_homeFragment)
                 sharedViewModel.hideBottomVav(true)
             }
-
             textApprove.setOnClickListener{
-                getApprovedHistory()
+                getRejectedHistory()
                 textViewReport.text = "Approved"
                 textApprove.setBackgroundResource(R.drawable.red_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
@@ -79,7 +78,7 @@ class HistoryFragment : Fragment() {
                 textAll.setTextColor(Color.parseColor("#ffffff"))
             }
             textReject.setOnClickListener {
-                getRejectedHistory()
+                getApprovedHistory()
                 textViewReport.text = "Rejected"
                 textReject.setBackgroundResource(R.drawable.red_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
@@ -121,6 +120,7 @@ class HistoryFragment : Fragment() {
                 dialog_text_interest_rate.text = "${it?.approval?.transaction?.interestRate}%"
                 dialog_text_credit_ratio.text = "${it?.approval?.transaction?.creditRatio}%"
                 dialog_text_tenor.text = "${it?.approval?.transaction?.tenor} month"
+                dialog_history_text_submitter.text = it?.approval?.transaction?.submitter
                 if (it?.approval?.transaction?.financeCriteria == true){
                     dialog_text_financial_criteria.text = "Pass"
                 } else {

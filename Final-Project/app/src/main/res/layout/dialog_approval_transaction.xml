@@ -283,7 +283,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp">
 
                 <TextView
@@ -307,7 +306,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins_med"
-                    android:text="Main Loan"
+                    android:text="Principal"
                     android:textColor="@color/dark_blue"
                     android:textSize="15sp" />
 
@@ -324,7 +323,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins_med"
-                    android:text="Reason Type"
+                    android:text="Loan Purpose"
                     android:textColor="@color/dark_blue"
                     android:textSize="15sp" />
 

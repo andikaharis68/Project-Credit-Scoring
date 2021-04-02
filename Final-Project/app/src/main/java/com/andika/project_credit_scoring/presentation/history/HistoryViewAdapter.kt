@@ -18,8 +18,8 @@ class HistoryViewAdapter(private val historyClickListener: HistoryClickListener)
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        val account = history[position]
-        holder.bind(account)
+        val history = history[position]
+        holder.bindAll(history)
     }
 
     override fun getItemCount(): Int {

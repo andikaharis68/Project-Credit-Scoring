@@ -102,7 +102,7 @@ class TransactionFragment : Fragment() {
                 dialog_main_loan.text = formatRupiah.format(it?.transaction?.mainLoan)
                 dialog_interest_rate.text = "${it?.transaction?.interestRate}%"
                 dialog_tenor.text = "${it?.transaction?.tenor} month"
-                dialog_reason_type.text = it?.transaction?.needType.toString()
+                dialog_reason_type.text = it?.transaction?.needType?.type
                 if(it?.transaction?.employeeCriteria == true) {
                     dialog_employee_criteria.text = "Pass"
                     dialog_employee_criteria.setTextColor(Color.parseColor("#00B1B0"))
@@ -142,6 +142,7 @@ class TransactionFragment : Fragment() {
                         "Success transaction from ${it.data?.transaction?.customer?.name}",
                         Toast.LENGTH_SHORT
                     ).show()
+                    findNavController().navigate(R.id.action_transactionFragment_to_historyFragment)
                 }
                 100 -> {
                     loadingDialog.hide()

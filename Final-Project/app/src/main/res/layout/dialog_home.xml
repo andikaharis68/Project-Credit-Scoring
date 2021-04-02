@@ -25,114 +25,15 @@
                 android:paddingVertical="20dp">
 
                 <LinearLayout
-                    android:layout_width="300dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="170dp"
-                        android:layout_height="150dp"
-                        android:paddingHorizontal="20dp"
-                        android:orientation="vertical"
-                        android:background="@drawable/round_corner_white">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:lineSpacingExtra="2sp"
-                            android:text="Overall Lent"
-                            android:textColor="#3d2582"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:lineSpacingExtra="2sp"
-                            android:text="Rp.50.000.000"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:lineSpacingExtra="2sp"
-                            android:text="Overall installment "
-                            android:textColor="#3d2582"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:lineSpacingExtra="2sp"
-                            android:text="Rp.5.000.000"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:lineSpacingExtra="2sp"
-                            android:text="/ month"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="130dp"
-                        android:layout_height="150dp"
-                        android:orientation="vertical"
-                        android:paddingLeft="30dp"
-                        android:background="@drawable/round_corner_white">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:lineSpacingExtra="2sp"
-                            android:text="Overall"
-                            android:textColor="#3d2582"
-                            android:textSize="15sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:lineSpacingExtra="2sp"
-                            android:text="Credit Ratio"
-                            android:textColor="#3d2582"
-                            android:textSize="12sp" />
-
-                        <com.budiyev.android.circularprogressbar.CircularProgressBar
-                            android:id="@+id/progress_bar"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            app:animateProgress="true"
-                            app:backgroundStrokeColor="@color/dark_blue"
-                            app:backgroundStrokeWidth="8dp"
-                            app:drawBackgroundStroke="false"
-                            app:foregroundStrokeCap="butt"
-                            app:foregroundStrokeColor="@color/red_fruchsia"
-                            app:foregroundStrokeWidth="5dp"
-                            app:indeterminate="false"
-                            app:indeterminateRotationAnimationDuration="12000"
-                            app:indeterminateSweepAnimationDuration="11600"
-                            app:indeterminateMinimumAngle="45"
-                            app:maximum="100"
-                            app:progress="50"
-                            app:progressAnimationDuration="100"
-                            app:startAngle="0"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="300dp"
-                    android:layout_height="94dp"
                     android:layout_marginHorizontal="10dp"
                     android:background="@drawable/round_corner_white"
                     android:orientation="vertical"
                     android:paddingLeft="28dp"
                     android:paddingTop="0dp"
                     android:paddingRight="28dp"
-                    android:paddingBottom="0dp">
+                    android:paddingBottom="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -172,11 +73,12 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="2sp"
-                                    android:text="employee"
+                                    android:text="Customer"
                                     android:textColor="#3d2582"
                                     android:textSize="10sp" />
 
                                 <TextView
+                                    android:id="@+id/dialog_home_customer"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="3sp"
@@ -185,6 +87,49 @@
                                     android:textSize="14sp" />
                             </LinearLayout>
                         </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="6dp"
+                                android:layout_height="17dp"
+                                android:layout_marginTop="3dp"
+                                android:src="@drawable/round_corner_yellow" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="2sp"
+                                    android:text="Transaction"
+                                    android:textColor="#3d2582"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/dialog_home_transaction"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:lineSpacingExtra="3sp"
+                                    android:text="293"
+                                    android:textColor="#3d2582"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="287dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
 
                         <LinearLayout
                             android:layout_width="80dp"
@@ -207,11 +152,12 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="2sp"
-                                    android:text="temporary"
+                                    android:text="Approved"
                                     android:textColor="#3d2582"
                                     android:textSize="10sp" />
 
                                 <TextView
+                                    android:id="@+id/dialog_home_approved"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="3sp"
@@ -242,11 +188,12 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="2sp"
-                                    android:text="non-employee"
+                                    android:text="Rejected"
                                     android:textColor="#3d2582"
                                     android:textSize="10sp" />
 
                                 <TextView
+                                    android:id="@+id/dialog_home_rejected"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="3sp"

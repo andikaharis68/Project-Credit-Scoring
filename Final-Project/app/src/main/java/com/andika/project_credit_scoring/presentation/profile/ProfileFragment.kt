@@ -113,8 +113,16 @@ class ProfileFragment : Fragment() {
                             oldPassword = dialog_password_text_old.text.toString(),
                             password = dialog_password_text_new.text.toString()
                         )
-                        editPassword(requestPassword)
-                        alertDialog.hide()
+                        if (dialog_password_text_new.text.toString() == dialog_password_text_confirm.text.toString()){
+                            editPassword(requestPassword)
+                            alertDialog.hide()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "password is mismatch, try again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }
