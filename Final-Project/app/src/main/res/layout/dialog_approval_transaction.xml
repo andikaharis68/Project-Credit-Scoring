@@ -444,7 +444,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/yellow_freesia"
+                android:backgroundTint="@color/red_fruchsia"
                 android:text="reject"
                 android:textColor="@color/white" />
 
@@ -455,7 +455,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/red_fruchsia"
+                android:backgroundTint="@color/yellow_freesia"
                 android:text="approve"
                 android:textColor="@color/white" />
 

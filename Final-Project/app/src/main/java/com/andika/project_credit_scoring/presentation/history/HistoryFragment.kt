@@ -59,7 +59,6 @@ class HistoryFragment : Fragment() {
             }
             textApprove.setOnClickListener{
                 getRejectedHistory()
-                textViewReport.text = "Approved"
                 textApprove.setBackgroundResource(R.drawable.red_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
                 textReject.setBackgroundResource(R.drawable.white_roundshape)
@@ -69,7 +68,6 @@ class HistoryFragment : Fragment() {
             }
             textAll.setOnClickListener{
                 getAllHistory()
-                textViewReport.text = "All report"
                 textAll.setBackgroundResource(R.drawable.red_roundshape)
                 textApprove.setBackgroundResource(R.drawable.white_roundshape)
                 textReject.setBackgroundResource(R.drawable.white_roundshape)
@@ -79,7 +77,6 @@ class HistoryFragment : Fragment() {
             }
             textReject.setOnClickListener {
                 getApprovedHistory()
-                textViewReport.text = "Rejected"
                 textReject.setBackgroundResource(R.drawable.red_roundshape)
                 textAll.setBackgroundResource(R.drawable.white_roundshape)
                 textApprove.setBackgroundResource(R.drawable.white_roundshape)
