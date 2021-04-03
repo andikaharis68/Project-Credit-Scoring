@@ -10,7 +10,6 @@ import java.text.NumberFormat
 import java.util.*
 
 class HistoryViewHolder(view: View, private val historyClickListener: HistoryClickListener) : RecyclerView.ViewHolder(view) {
-
     private val binding = CardViewHistoryBinding.bind(view)
     val localeID = Locale("in", "ID")
     val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)

@@ -120,13 +120,17 @@ class HistoryFragment : Fragment() {
                 dialog_history_text_submitter.text = it?.approval?.transaction?.submitter
                 if (it?.approval?.transaction?.financeCriteria == true){
                     dialog_text_financial_criteria.text = "Pass"
+                    dialog_text_financial_criteria.setTextColor(Color.parseColor("#00B1B0"))
                 } else {
                     dialog_text_financial_criteria.text = "Not Pass"
+                    dialog_text_financial_criteria.setTextColor(Color.parseColor("#ba0f30"))
                 }
                 if (it?.approval?.transaction?.employeeCriteria == true){
                     dialog_text_employee_criteria.text = "Pass"
+                    dialog_text_employee_criteria.setTextColor(Color.parseColor("#00B1B0"))
                 } else {
                     dialog_text_employee_criteria.text = "Not Pass"
+                    dialog_text_employee_criteria.setTextColor(Color.parseColor("#ba0f30"))
                 }
                 dialog_text_date_submited.text = it?.submitDate
                 dialog_text_date_approved.text = it?.approvalDate

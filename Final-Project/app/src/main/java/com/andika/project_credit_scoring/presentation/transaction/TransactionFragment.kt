@@ -68,7 +68,9 @@ class TransactionFragment : Fragment() {
             }
             refreshTransaction.setOnRefreshListener {
                 viewModel.getALlTransaction()
+                refreshTransaction.isRefreshing = false
             }
+
             btnBack.setOnClickListener{
                 findNavController().navigate(R.id.action_transactionFragment_to_homeFragment)
                 sharedViewModel.hideBottomVav(true)

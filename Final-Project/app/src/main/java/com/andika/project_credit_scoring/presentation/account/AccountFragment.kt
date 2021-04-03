@@ -66,6 +66,11 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 findNavController().navigate(R.id.action_accountFragment_to_homeMasterFragment)
             }
 
+            refreshAccount.setOnRefreshListener {
+                getAllAccount()
+                refreshAccount.isRefreshing = false
+            }
+
             textVerified.setOnClickListener {
                 getAllAccountVerified()
                 textVerified.setBackgroundResource(R.drawable.red_roundshape)
@@ -224,6 +229,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 when (it?.code) {
                     200 -> {
                         loadingDialog.hide()
+                        getAllAccount()
                         Toast.makeText(
                             requireContext(),
                             "Success add this account",
@@ -249,6 +255,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 when (it?.code) {
                     200 -> {
                         loadingDialog.hide()
+                        getAllAccount()
                         Toast.makeText(
                             requireContext(),
                             "Success delete this account",

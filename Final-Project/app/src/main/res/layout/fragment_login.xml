@@ -18,7 +18,7 @@
             android:layout_height="148.7dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:src="@drawable/duanew" />
+            android:src="@drawable/duarisk" />
 
         <FrameLayout
             android:layout_width="match_parent"
