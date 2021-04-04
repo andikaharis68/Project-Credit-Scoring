@@ -55,7 +55,6 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding.apply {
-
             viewModel.getUser().observe(requireActivity()) {
                 Glide.with(requireActivity()).load(it?.data?.profilePicture).into(profile_picture)
                 profileTextName.text = it?.data?.fullName

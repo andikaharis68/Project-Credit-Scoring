@@ -20,6 +20,7 @@ import com.andika.project_credit_scoring.databinding.FragmentAccountBinding
 import com.andika.project_credit_scoring.model.account.RequestAddAccount
 import com.andika.project_credit_scoring.model.roles.ListRole
 import com.andika.project_credit_scoring.util.component.LoadingDialog
+import com.wajahatkarim3.easyvalidation.core.view_ktx.validEmail
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.alert_delete_account.view.*
 import kotlinx.android.synthetic.main.alert_logout.view.*
@@ -114,8 +115,24 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         username = dialogView.dialog_et_username.text.toString(),
                         role = role
                     )
-                    addAccount(accountRequestValue)
-                    alertDialog.dismiss()
+                    if(dialogView.dialog_et_name.text.toString() != "" && dialogView.dialog_et_email.text.toString() != "" && dialogView.dialog_et_username.text.toString() != ""){
+                        if(dialogView.dialog_et_email.text.toString().validEmail()){
+                            addAccount(accountRequestValue)
+                            alertDialog.dismiss()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Email not valid",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Please input all data",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
                 dialogView.dialogBtnCancel.setOnClickListener {
                     alertDialog.dismiss()
@@ -125,7 +142,6 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     requireContext(),
                     android.R.layout.simple_spinner_dropdown_item, roles
                 )
-
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 dialogView.spinner_role.adapter = adapter
@@ -173,7 +189,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     loadingDialog.hide()
                     Toast.makeText(
                         requireContext(),
-                        "${it?.message}",
+                        "Failed to get all account",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -194,7 +210,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     loadingDialog.hide()
                     Toast.makeText(
                         requireContext(),
-                        "${it?.message}",
+                        "Failed to get all account",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -215,7 +231,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                     loadingDialog.hide()
                     Toast.makeText(
                         requireContext(),
-                        "${it?.message}",
+                        "Failed to get all account",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -240,7 +256,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         loadingDialog.hide()
                         Toast.makeText(
                             requireContext(),
-                            "${it?.message}",
+                            "Failed to add data",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -280,7 +296,9 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 200 -> {
                     it?.data?.list?.apply {
                         for(i in this){
-                            roles.add(i?.name!!)
+                            if(i?.name != "MASTER"){
+                                roles.add(i?.name!!)
+                            }
                         }
                     }
                 }

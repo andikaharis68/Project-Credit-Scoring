@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
         binding.apply {
             textInfoUser.text = user
             textInfoRole.text = "You're access as a $role"
-            if (approvalTransaction == "true" || readTransaction == "true"){
+            if (readTransaction == "true"){
                 homeBtnTransaction.setBackgroundResource(R.drawable.round_corner_white)
                 homeBtnTransaction.setOnClickListener {
                     findNavController().navigate(R.id.action_global_transactionFragment)

@@ -11,6 +11,11 @@ class ListRoleHolder(view: View, private val roleListClickListener: RoleListClic
 
     fun bind(role: ListRole?) {
         binding.apply {
+            if (role?.name == "MASTER"){
+                cardViewRole.visibility = View.GONE
+            } else {
+                cardViewRole.visibility = View.VISIBLE
+            }
             cardNameRole.text = role?.name
             if (role?.inputCustomer!!){
                 checkInputCustomer.visibility  = View.VISIBLE

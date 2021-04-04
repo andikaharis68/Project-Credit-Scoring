@@ -53,7 +53,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="27.3dp"
-                        android:text="Input Username"/>
+                        android:text="Username"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -69,7 +69,6 @@
                             android:background="@drawable/round_corner_white"
                             android:ems="10"
                             android:hint="Username" />
-
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <View
@@ -83,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="22dp"
-                        android:text="Input Password" />
+                        android:text="Password" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

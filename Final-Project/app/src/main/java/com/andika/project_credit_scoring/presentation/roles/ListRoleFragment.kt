@@ -37,7 +37,7 @@ class ListRoleFragment : Fragment() {
         super.onCreate(savedInstanceState)
         initViewModel()
         subscribe()
-        getAllHistory()
+        getAllRole()
         binding = FragmentListRoleBinding.inflate(layoutInflater)
     }
 
@@ -45,7 +45,6 @@ class ListRoleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("roleList", "$roleList")
         binding.apply {
             loadingDialog = LoadingDialog.build(requireContext())
             rvAdapter = ListRoleAdapter(viewModel)
@@ -55,6 +54,10 @@ class ListRoleFragment : Fragment() {
             }
             btnBack.setOnClickListener {
                 findNavController().navigate(R.id.action_listRoleFragment_to_homeMasterFragment)
+            }
+            refreshRoleList.setOnRefreshListener {
+                getAllRole()
+                refreshRoleList.isRefreshing = false
             }
         }
         return binding.root
@@ -81,10 +84,9 @@ class ListRoleFragment : Fragment() {
                 alertDialog.dismiss()
             }
         }
-
     }
 
-    fun getAllHistory() =
+    fun getAllRole() =
         viewModel.getALlRole().observe(requireActivity()) {
             loadingDialog.show()
             when (it?.code) {
@@ -125,6 +127,7 @@ class ListRoleFragment : Fragment() {
                             "Success delete this role",
                             Toast.LENGTH_SHORT
                         ).show()
+                        getAllRole()
                     }
                     else -> {
                         loadingDialog.hide()
