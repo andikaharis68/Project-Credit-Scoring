@@ -24,10 +24,12 @@ import com.andika.project_credit_scoring.model.transaction.RequestApproval
 import com.andika.project_credit_scoring.model.user.RequestPassword
 import com.andika.project_credit_scoring.model.user.RequestUser
 import com.andika.project_credit_scoring.presentation.login.LoginViewModel
+import com.andika.project_credit_scoring.util.component.LoadingDialog
 import com.bumptech.glide.Glide
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
+import com.wajahatkarim3.easyvalidation.core.view_ktx.validEmail
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_edit_password.view.*
 import kotlinx.android.synthetic.main.dialog_edit_profile.*
@@ -42,6 +44,7 @@ class ProfileFragment : Fragment() {
     private var selectedImage: Uri? = null
     lateinit var requestUser: RequestUser
     lateinit var requestPassword: RequestPassword
+    lateinit var loadingDialog: androidx.appcompat.app.AlertDialog
     var uri = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +57,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        loadingDialog = LoadingDialog.build(requireContext())
         binding.apply {
             viewModel.getUser().observe(requireActivity()) {
                 Glide.with(requireActivity()).load(it?.data?.profilePicture).into(profile_picture)
@@ -69,6 +73,10 @@ class ProfileFragment : Fragment() {
 
             profileEditImage.setOnClickListener {
                 loadImagefromGallery(it)
+            }
+
+            refreshProfile.setOnRefreshListener {
+                refreshProfile.isRefreshing = false
             }
 
             profileEditBtn.setOnClickListener {
@@ -92,8 +100,16 @@ class ProfileFragment : Fragment() {
                             email = dialog_edit_text_email.text.toString(),
                             profilePicture = uri
                         )
-                        editUser(requestUser)
-                        alertDialog.hide()
+                        if(dialog_edit_text_email.text.toString().validEmail()){
+                            editUser(requestUser)
+                            alertDialog.hide()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Email invalid, please try again",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }
@@ -154,12 +170,12 @@ class ProfileFragment : Fragment() {
                 uploadToCloudinary(getPath(selectedImage)!!)
             } else {
                 Toast.makeText(
-                    requireContext(), "Anda belum mengambil gambar",
+                    requireContext(), "You not pick a picture",
                     Toast.LENGTH_LONG
                 ).show()
             }
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), "Kesalahan terjadi", Toast.LENGTH_LONG)
+            Toast.makeText(requireContext(), "Check your connection", Toast.LENGTH_LONG)
                 .show()
         }
     }
@@ -175,8 +191,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun uploadToCloudinary(filepath: String) {
+        loadingDialog.show()
         MediaManager.get().upload(filepath).unsigned("ve2u0qv8").callback(object : UploadCallback {
             override fun onSuccess(requestId: String?, resultData: MutableMap<Any?, Any?>?) {
+                loadingDialog.hide()
                 Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show()
                 uri = resultData?.get("url").toString()
                 Glide.with(requireActivity()).load(uri).into(profile_picture)
@@ -191,6 +209,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun onError(requestId: String?, error: ErrorInfo?) {
+                loadingDialog.hide()
                 error
                 Toast.makeText(
                     requireContext(),
