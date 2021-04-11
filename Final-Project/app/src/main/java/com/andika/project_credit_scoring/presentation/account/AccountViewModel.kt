@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.andika.project_credit_scoring.di.qualifier.ServiceAccount
 import com.andika.project_credit_scoring.model.account.RequestAddAccount
 import com.andika.project_credit_scoring.model.account.ResponseAccount
+import com.andika.project_credit_scoring.model.account.ResponseAddAccount
 import com.andika.project_credit_scoring.model.roles.ResponseRole
 import com.andika.project_credit_scoring.repositories.AccountRepository
 import com.andika.project_credit_scoring.util.ResourceState
@@ -93,17 +94,15 @@ class AccountViewModel @Inject constructor(@ServiceAccount val repository: Accou
     fun addAccount(requestAccount: RequestAddAccount) =
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             withTimeout(5000) {
-                var response: ResponseAccount? = null
-                Log.d("REQUEST ADD ACCOUNT", "$requestAccount")
+                var response: ResponseAddAccount? = null
                 try {
                     response = repository.addAccount(requestAccount)
-
                 } catch (e: Exception) {
                     Log.d("ERROR", "$e")
                     response =
-                        ResponseAccount(
+                        ResponseAddAccount(
                             code = 100,
-                            data = null,
+                            data = "Failed connect to server",
                             message = "Failed connect to server",
                         )
                 } finally {

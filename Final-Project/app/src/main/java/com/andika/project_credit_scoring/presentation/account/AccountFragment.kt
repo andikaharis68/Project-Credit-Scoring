@@ -256,7 +256,7 @@ class AccountFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         loadingDialog.hide()
                         Toast.makeText(
                             requireContext(),
-                            "Failed to add data",
+                            "${it?.data}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

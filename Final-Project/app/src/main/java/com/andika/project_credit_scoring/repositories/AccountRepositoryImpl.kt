@@ -5,6 +5,7 @@ import android.util.Log
 import com.andika.project_credit_scoring.api.AccountApi
 import com.andika.project_credit_scoring.model.account.RequestAddAccount
 import com.andika.project_credit_scoring.model.account.ResponseAccount
+import com.andika.project_credit_scoring.model.account.ResponseAddAccount
 import com.andika.project_credit_scoring.model.roles.ResponseRole
 import retrofit2.Response
 import javax.inject.Inject
@@ -24,7 +25,7 @@ class AccountRepositoryImpl @Inject constructor(private val accountApi: AccountA
         return accountApi.getAccountNotVerified()
     }
 
-    override suspend fun addAccount(requestAccount: RequestAddAccount): ResponseAccount {
+    override suspend fun addAccount(requestAccount: RequestAddAccount): ResponseAddAccount {
         return accountApi.addAccount(requestAccount)
     }
 

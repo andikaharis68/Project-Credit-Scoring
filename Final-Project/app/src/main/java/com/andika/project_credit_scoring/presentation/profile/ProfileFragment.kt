@@ -3,6 +3,7 @@ package com.andika.project_credit_scoring.presentation.profile
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -35,6 +36,7 @@ import kotlinx.android.synthetic.main.dialog_edit_password.view.*
 import kotlinx.android.synthetic.main.dialog_edit_profile.*
 import kotlinx.android.synthetic.main.dialog_edit_profile.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -46,6 +48,7 @@ class ProfileFragment : Fragment() {
     lateinit var requestPassword: RequestPassword
     lateinit var loadingDialog: androidx.appcompat.app.AlertDialog
     var uri = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,12 +104,20 @@ class ProfileFragment : Fragment() {
                             profilePicture = uri
                         )
                         if(dialog_edit_text_email.text.toString().validEmail()){
-                            editUser(requestUser)
-                            alertDialog.hide()
+                            if(dialog_edit_text_username.text.toString() != "" && dialog_edit_text_name.text.toString()!=""){
+                                editUser(requestUser)
+                                alertDialog.hide()
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Please input all data",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         } else {
                             Toast.makeText(
                                 requireContext(),
-                                "Email invalid, please try again",
+                                "Email not valid",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
